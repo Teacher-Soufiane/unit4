@@ -1,0 +1,910 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English2BAC Sustainability Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&amp;family=Poppins:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #1e3a5f;
+      --blue: #2563eb;
+      --light-blue: #eaf4ff;
+      --green: #16a34a;
+      --red: #dc2626;
+      --gray: #64748b;
+      --surface: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      width: 100%;
+      color: #1e293b;
+      font-family: "Poppins", "Cairo", sans-serif;
+      background: #f4f8fc;
+    }
+
+    button, input { font: inherit; }
+    button:focus-visible, .passage-paragraph:focus-visible {
+      outline: 3px solid #60a5fa;
+      outline-offset: 3px;
+    }
+
+    .app-wrapper { width: 100%; min-height: 100%; }
+    .quiz-shell { width: 100%; max-width: 1120px; margin: 0 auto; padding: 18px; }
+
+    .quiz-header {
+      background-color: #eaf4ff;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 22px;
+      border-radius: 18px 18px 0 0;
+    }
+
+    .header-teacher-img,
+    .header-logo-img {
+      height: 64px;
+      width: auto;
+      max-width: none;
+      object-fit: contain;
+      display: block;
+    }
+
+    .header-title { text-align: center; line-height: 1.2; }
+    .title-line1 {
+      font-family: "Poppins", sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: #1e3a5f;
+    }
+    .title-line2 {
+      font-family: "Poppins", sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      color: #2563eb;
+    }
+    .title-line3 {
+      font-family: "Poppins", sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #64748b;
+    }
+
+    .info-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 12px 18px;
+      background: var(--navy);
+      color: white;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+    .info-bar span:nth-child(2) { text-align: center; }
+    .info-bar span:nth-child(3) { text-align: right; }
+
+    .quiz-card {
+      background: white;
+      padding: 20px;
+      box-shadow: 0 12px 32px rgba(30, 58, 95, .12);
+      border-radius: 0 0 18px 18px;
+    }
+
+    .passage-card {
+      background: #fff;
+      border: 2px solid #bfdbfe;
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 18px;
+    }
+
+    .passage-toggle {
+      width: 100%;
+      border: 0;
+      cursor: pointer;
+      padding: 14px 18px;
+      background: #fff;
+      color: var(--navy);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .passage-content {
+      display: none;
+      border-top: 1px solid #dbeafe;
+      padding: 18px;
+      max-height: calc(40 * min(var(--vh, 1vh), 1vh));
+      overflow-y: auto;
+    }
+    .passage-card.is-open .passage-content { display: block; }
+    .passage-title { font-weight: 700; font-size: 18px; color: var(--navy); margin: 0 0 12px; }
+
+    .passage-paragraph {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      padding: 11px 8px;
+      margin-bottom: 5px;
+      border-radius: 10px;
+      line-height: 1.6;
+      transition: background .18s ease, color .18s ease, transform .18s ease;
+    }
+    .paragraph-number {
+      display: inline-block;
+      font-weight: 700;
+      color: #ffffff;
+      background-color: #1e3a5f;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      text-align: center;
+      line-height: 22px;
+      font-size: 13px;
+      margin-right: 8px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .paragraph-text { flex: 1; }
+    .evidence-mode .passage-paragraph { cursor: pointer; }
+    .evidence-mode .passage-paragraph:hover,
+    .evidence-mode .passage-paragraph:focus { background: #dbeafe; }
+    .evidence-mode .passage-paragraph:hover .paragraph-number,
+    .evidence-mode .passage-paragraph:focus .paragraph-number { background: #2563eb; }
+    .passage-paragraph.selected { background: #bfdbfe; }
+    .passage-paragraph.selected .paragraph-number { background: #2563eb; }
+    .passage-paragraph.evidence-correct { background: #dcfce7; }
+    .passage-paragraph.evidence-correct .paragraph-number { background: var(--green); }
+    .passage-paragraph.evidence-wrong { background: #fee2e2; }
+    .passage-paragraph.evidence-wrong .paragraph-number { background: var(--red); }
+
+    .instruction-box {
+      background: var(--navy);
+      color: white;
+      padding: 17px 20px;
+      border-radius: 14px;
+      font-weight: 800;
+      text-align: center;
+      letter-spacing: .025em;
+      margin-bottom: 18px;
+    }
+
+    .task-area {
+      background: #f8fafc;
+      border-left: 5px solid var(--blue);
+      padding: 18px;
+      border-radius: 10px;
+      line-height: 1.65;
+      font-size: 17px;
+      margin-bottom: 18px;
+    }
+
+    .choice-list { display: grid; gap: 11px; }
+    .choice-button {
+      width: 100%;
+      border: 2px solid #cbd5e1;
+      background: white;
+      color: #1e293b;
+      border-radius: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+    .choice-button:hover:not(:disabled) { border-color: var(--blue); background: #eff6ff; transform: translateY(-1px); }
+    .choice-button:disabled { cursor: default; }
+    .choice-button.correct { border-color: var(--green); background: #dcfce7; color: #166534; font-weight: 700; }
+    .choice-button.wrong { border-color: var(--red); background: #fee2e2; color: #991b1b; font-weight: 700; }
+
+    .check-evidence {
+      margin: 16px auto 0;
+      display: block;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 24px;
+      cursor: pointer;
+      background: var(--blue);
+      color: white;
+      font-weight: 700;
+    }
+    .check-evidence:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    .feedback {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      line-height: 1.55;
+    }
+    .feedback.show { display: block; }
+    .feedback.correct-feedback { background: #dcfce7; color: #166534; border-left: 4px solid var(--green); }
+    .feedback.wrong-feedback { background: #fee2e2; color: #991b1b; border-left: 4px solid var(--red); }
+    .feedback strong { display: block; margin-bottom: 4px; }
+
+    .nav-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .nav-row .next-button { justify-self: end; }
+    .quiz-button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 17px;
+      cursor: pointer;
+      background: var(--navy);
+      color: white;
+      font-weight: 700;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+    .quiz-button:hover:not(:disabled) { transform: translateY(-1px); }
+    .quiz-button:disabled { opacity: .45; cursor: not-allowed; }
+    .counter { font-weight: 700; color: var(--navy); }
+
+    .stats-row {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: nowrap;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 10px;
+    }
+    .stats-row span { white-space: nowrap; }
+
+    .result-page, .review-page { display: none; }
+    .result-page.active, .review-page.active { display: block; }
+    .quiz-stage.hidden { display: none; }
+
+    .result-header { text-align: center; color: var(--navy); }
+    .result-unit { font-size: 13px; font-weight: 800; letter-spacing: .08em; color: var(--blue); }
+    .score-badge {
+      width: 180px;
+      height: 180px;
+      margin: 22px auto;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      border: 10px solid #bfdbfe;
+      color: white;
+      font-size: 37px;
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(30, 58, 95, .2);
+    }
+    .remark { min-height: 42px; text-align: center; color: var(--blue); font-size: 28px; font-weight: 800; }
+    .reading-score-line { text-align: center; white-space: pre-line; line-height: 1.7; margin: 15px auto 22px; font-size: 17px; }
+    .summary-panel { background: #f8fafc; border: 1px solid #dbeafe; border-radius: 14px; padding: 18px; }
+    .summary-panel h2 { color: var(--navy); margin: 0 0 12px; font-size: 20px; }
+    .summary-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 24px; }
+    .task-breakdown { grid-column: 1 / -1; margin-top: 8px; }
+    .task-breakdown ul { margin: 8px 0 0; padding-left: 20px; }
+    .result-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px; }
+    .secondary-button { background: #e2e8f0; color: var(--navy); }
+    .green-button { background: var(--green); }
+    .review-group { margin: 20px 0; }
+    .review-group h2 { color: var(--navy); border-bottom: 2px solid #bfdbfe; padding-bottom: 7px; }
+    .review-item { background: #f8fafc; border-radius: 12px; padding: 15px; margin-top: 12px; border-left: 5px solid #94a3b8; }
+    .review-item.review-correct { border-left-color: var(--green); }
+    .review-item.review-wrong { border-left-color: var(--red); }
+    .review-item p { margin: 8px 0; line-height: 1.55; }
+    .review-passage { display: none; margin: 15px 0; }
+    .review-passage.show { display: block; }
+    .review-passage .passage-content { display: block; max-height: calc(40 * min(var(--vh, 1vh), 1vh)); border: 1px solid #bfdbfe; border-radius: 10px; background: white; }
+    .confetti-piece { position: fixed; width: 10px; height: 14px; z-index: 50; pointer-events: none; animation: fall 3.4s linear forwards; }
+    @keyframes fall { to { transform: translateY(calc(100 * min(var(--vh, 1vh), 1vh))) rotate(720deg); opacity: 0; } }
+
+    @media (min-width: 600px) {
+      .header-teacher-img, .header-logo-img { height: 80px; }
+    }
+    @media (min-width: 1024px) {
+      .header-teacher-img, .header-logo-img { height: 96px; }
+    }
+    @media (max-width: 640px) {
+      .quiz-shell { padding: 0; }
+      .quiz-header { padding: 8px 12px; gap: 8px; border-radius: 0; }
+      .header-teacher-img, .header-logo-img { height: 45px; }
+      .title-line1 { font-size: 16px; }
+      .title-line2 { font-size: 12px; }
+      .title-line3 { font-size: 10px; }
+      .info-bar { padding: 10px 9px; font-size: 9px; gap: 5px; }
+      .quiz-card { border-radius: 0; padding: 14px; }
+      .passage-content { max-height: calc(50 * min(var(--vh, 1vh), 1vh)); padding: 12px; }
+      .passage-paragraph { padding: 12px 6px; font-size: 15px; }
+      .instruction-box { font-size: 14px; padding: 14px 12px; }
+      .task-area { font-size: 15px; padding: 14px; }
+      .stats-row { flex-wrap: wrap; gap: 7px 12px; font-size: 12px; }
+      .summary-list { grid-template-columns: 1fr; }
+      .score-badge { width: 145px; height: 145px; font-size: 30px; }
+    }
+
+    @media print {
+      body { background: white; }
+      .quiz-header, .info-bar, .result-actions, .review-page, .quiz-stage, .passage-card { display: none !important; }
+      .quiz-shell, .quiz-card { max-width: none; padding: 0; box-shadow: none; }
+      .result-page { display: block !important; }
+      .result-page * { color: #111 !important; }
+      .score-badge { border: 2px solid #111; background: white !important; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  
+  
+  
+ <script>(function(){var ok=true;try{window.localStorage.getItem("__t")}catch(e){ok=false}
+if(!ok){var m={};try{Object.defineProperty(window,"localStorage",{configurable:true,value:{
+getItem:function(k){return Object.prototype.hasOwnProperty.call(m,k)?m[k]:null},
+setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}}}})}catch(e2){}}})();</script></head>
+ <body>
+  <div class="app-wrapper">
+   <div class="quiz-shell">
+    <header class="quiz-header">
+     <img class="header-teacher-img" loading="lazy" src="teacher.png" alt="Teacher Soufiane">
+     <div class="header-title">
+      <div class="title-line1">
+       English2BAC Quizzes
+      </div>
+      <div class="title-line2">
+       Learn • Practice • Succeed
+      </div>
+      <div class="title-line3">
+       with Teacher.Soufiane
+      </div>
+     </div><img class="header-logo-img" loading="lazy" src="logo.png" alt="Level-UP 2BAC">
+    </header>
+    <section class="info-bar" aria-label="Quiz information">
+     <span class="">UNIT: 4</span> <span class=""></span> <span class="">READING COMPREHENSION</span>
+    </section>
+    <main class="quiz-card">
+     <section id="quiz-stage" class="quiz-stage">
+      <section id="passage-card" class="passage-card" aria-label="Reading passage">
+       <button id="passage-toggle" type="button" class="passage-toggle" aria-expanded="false"> <span id="passage-show-label" class="">📖 Read the Passage</span> <span id="passage-hide-label" class="" hidden="">📖 Read the Passage</span> </button>
+       <div id="passage-content" class="passage-content">
+        <div id="passage-body"></div>
+       </div>
+      </section>
+      <section aria-live="polite">
+       <div id="question-instruction" class="instruction-box"></div>
+       <div id="task-area" class="task-area"></div>
+       <div id="answer-area"></div>
+       <div id="feedback" class="feedback"></div>
+      </section>
+      <nav class="nav-row" aria-label="Question navigation">
+       <button id="previous-button" type="button" class="quiz-button">◀ Previous</button> <span id="question-counter" class="counter" aria-live="polite"></span> <button id="next-button" type="button" class="quiz-button next-button">Next ▶</button>
+      </nav>
+      <section class="stats-row" aria-label="Quiz statistics">
+       <span id="correct-stat">✅ Correct: 0</span> <span id="wrong-stat">❌ Wrong: 0</span> <span id="remaining-stat">Remaining: 15</span> <span id="score-stat">Score: 0 /15</span> <span id="timer-stat">Timer 00:00</span>
+      </section>
+     </section>
+     <section id="result-page" class="result-page" aria-live="polite">
+      <div class="result-header">
+       <div class="result-unit">
+        UNIT 4
+       </div>
+       <h1>SUSTAINABILITY</h1>
+       <p>READING COMPREHENSION</p>
+      </div>
+      <div id="final-score-badge" class="score-badge"></div>
+      <div id="remark" class="remark"></div>
+      <div id="reading-score-line" class="reading-score-line"></div>
+      <section class="summary-panel">
+       <h2>Performance Summary</h2>
+       <div id="summary-list" class="summary-list"></div>
+      </section>
+      <div class="result-actions">
+       <button id="review-button" type="button" class="quiz-button">Review My Answers</button> <button id="print-button" type="button" class="quiz-button secondary-button">Print Results</button> <button id="save-button" type="button" class="quiz-button green-button">Save Results</button> <button id="restart-button" type="button" class="quiz-button">Restart Quiz</button>
+      </div>
+     </section>
+     <section id="review-page" class="review-page">
+      <button id="back-results-button" type="button" class="quiz-button secondary-button">← Back to Results</button> <button id="review-passage-toggle" type="button" class="quiz-button" style="margin-left:8px;">📖 Show Passage</button>
+      <div id="review-passage" class="review-passage">
+       <div class="passage-content">
+        <h2 class="passage-title">Save Our Planet</h2>
+        <div id="review-passage-body"></div>
+       </div>
+      </div>
+      <div id="review-content"></div>
+     </section>
+    </main>
+   </div>
+  </div>
+  <script>
+    const quizConfig = {
+      unit: "4",
+      title: "SUSTAINABILITY",
+      lesson: "READING COMPREHENSION",
+      passageTitle: "Save Our Planet",
+      teacherName: "Teacher Soufiane",
+      randomizeQuestions: false,
+      randomizeChoices: true,
+      timerEnabled: true,
+      totalPoints: 15,
+      questions: [
+        { type:"single-choice", category:"Best Title", question:"CHOOSE THE BEST TITLE FOR THE PASSAGE.", task:"Which title best represents the main idea of the passage?", choices:["Save Our Planet","The History of Solar Power","Why Companies Need Profit","How to Recycle Plastic"], correctAnswer:"Save Our Planet", explanation:"The whole passage discusses sustainable development and how environmental, economic, and social efforts can work together to protect the planet, which matches this title. The other options focus on unrelated or very narrow topics.", points:1 },
+        { type:"single-choice", category:"True / False / Not Given", question:"DECIDE IF THE STATEMENT IS TRUE, FALSE, OR NOT GIVEN.", task:"Sustainable development is based on three connected pillars: environmental, economic, and social.", choices:["True","False","Not Given"], correctAnswer:"True", explanation:"Paragraph 1 states that this approach rests on three connected pillars: environmental protection, economic growth, and social well-being.", points:1 },
+        { type:"single-choice", category:"True / False / Not Given", question:"DECIDE IF THE STATEMENT IS TRUE, FALSE, OR NOT GIVEN.", task:"The passage gives the exact percentage of global carbon emissions caused by fossil fuels.", choices:["True","False","Not Given"], correctAnswer:"Not Given", explanation:"The passage discusses fossil fuels and renewable energy in general terms, but it never gives a specific percentage or statistic for carbon emissions.", points:1 },
+        { type:"single-choice", category:"Multiple Choice", question:"CHOOSE THE BEST ANSWER ACCORDING TO THE TEXT.", task:"According to the passage, what is one example of the environmental pillar of sustainable development?", choices:["Increasing the use of fossil fuels","Switching to renewable energy sources such as solar and wind power","Reducing government policies","Stopping all economic growth"], correctAnswer:"Switching to renewable energy sources such as solar and wind power", explanation:"Paragraph 2 states that the environmental pillar includes switching from fossil fuels to renewable energy sources such as solar and wind power.", points:1 },
+        { type:"single-choice", category:"Multiple Choice", question:"CHOOSE THE BEST ANSWER ACCORDING TO THE TEXT.", task:"According to the passage, why are green jobs important?", choices:["They stop companies from making profit","They show that environmental protection and economic growth can go together","They eliminate the need for renewable energy","They only exist in one country"], correctAnswer:"They show that environmental protection and economic growth can go together", explanation:"Paragraph 3 explains that sustainable business practices have created green jobs, showing that protecting the environment does not have to mean stopping economic growth.", points:1 },
+        { type:"evidence-click", category:"Find the Evidence", question:"CLICK THE PARAGRAPH THAT SUPPORTS THIS ANSWER.", claim:"Protecting forests helps absorb carbon and supports many species of plants and animals.", correctParagraphId:"p2", explanation:"Paragraph 2 states that protecting forests and biodiversity matters since healthy ecosystems absorb carbon and support countless species of plants and animals.", points:1 },
+        { type:"evidence-click", category:"Find the Evidence", question:"CLICK THE PARAGRAPH THAT SUPPORTS THIS ANSWER.", claim:"Local communities should be included in decisions about the land and resources they depend on.", correctParagraphId:"p4", explanation:"Paragraph 4 states that sustainable development involves including local communities in decisions that affect their land and resources.", points:1 },
+        { type:"single-choice", category:"Vocabulary in Context", question:"CHOOSE THE MEANING THAT FITS THE WORD AS USED IN THE PASSAGE.", task:"Read this sentence from paragraph 2: '...healthy ecosystems absorb carbon and support countless species of plants and animals.' What does 'countless' mean here?", choices:["very few","too many to count","exactly one hundred","imaginary"], correctAnswer:"too many to count", explanation:"In this context, 'countless' means too many to count, emphasizing the huge variety of species that healthy ecosystems support.", points:1 },
+        { type:"single-choice", category:"Vocabulary in Context", question:"CHOOSE THE MEANING THAT FITS THE WORD AS USED IN THE PASSAGE.", task:"Read this sentence from paragraph 3: 'A growing number of companies now realize that long-term profit depends on using resources responsibly rather than exhausting them.' What does 'exhausting' mean here?", choices:["saving carefully","using up completely","creating more of","selling quickly"], correctAnswer:"using up completely", explanation:"In this context, 'exhausting' resources means using them up completely, which is the opposite of using them responsibly.", points:1 },
+        { type:"single-choice", category:"Reference Words", question:"WHAT DOES THE UNDERLINED WORD REFER TO?", task:"Read this sentence from paragraph 2: 'It also involves protecting forests and biodiversity, since healthy ecosystems absorb carbon...' What does 'It' refer to?", choices:["the economic pillar","the environmental pillar","the social pillar","renewable energy"], correctAnswer:"the environmental pillar", explanation:"'It' refers back to 'the environmental pillar,' which is the subject introduced at the start of the paragraph.", points:1 },
+        { type:"single-choice", category:"Reference Words", question:"WHAT DOES THE UNDERLINED WORD REFER TO?", task:"Read this sentence from paragraph 5: 'Small individual actions...matter, but they are most powerful when combined with strong government policies...' What does 'they' refer to?", choices:["governments","small individual actions","businesses","future generations"], correctAnswer:"small individual actions", explanation:"'They' refers back to 'small individual actions' mentioned earlier in the same sentence.", points:1 },
+        { type:"single-choice", category:"Inference", question:"CHOOSE THE MOST LOGICAL CONCLUSION BASED ON THE TEXT.", task:"Based on the passage, what can we infer about a company that ignores sustainable practices?", choices:["It will definitely become more profitable","It may face long-term problems since resources could eventually run out","It will automatically create more green jobs","It has no effect on the environment"], correctAnswer:"It may face long-term problems since resources could eventually run out", explanation:"The passage explains that long-term profit depends on using resources responsibly rather than exhausting them, implying that ignoring sustainability could cause future problems.", points:1 },
+        { type:"single-choice", category:"Inference", question:"CHOOSE THE MOST LOGICAL CONCLUSION BASED ON THE TEXT.", task:"What can be inferred about the overall message of the passage?", choices:["Only governments are responsible for saving the planet","Environmental, economic, and social goals must work together for real progress","Economic growth is impossible if we protect the environment","Individual actions have no real impact"], correctAnswer:"Environmental, economic, and social goals must work together for real progress", explanation:"The passage consistently shows that the three pillars are connected and that saving the planet requires cooperation between governments, businesses, and citizens.", points:1 },
+        { type:"single-choice", category:"Cause & Effect", question:"CHOOSE THE EFFECT THAT MATCHES THE CAUSE.", task:"Cause: Many governments and businesses are switching from fossil fuels to renewable energy. Effect?", choices:["Carbon dioxide emissions are reduced","Forests disappear faster","Plastic pollution increases","Economic growth stops completely"], correctAnswer:"Carbon dioxide emissions are reduced", explanation:"Paragraph 2 states that renewable energy sources such as solar and wind power produce far less carbon dioxide than fossil fuels.", points:1 },
+        { type:"single-choice", category:"Cause & Effect", question:"CHOOSE THE EFFECT THAT MATCHES THE CAUSE.", task:"Cause: Local communities are included in decisions about the land and resources they depend on. Effect?", choices:["They tend to help protect the environment more effectively since they understand it best","They immediately gain new jobs","They stop using natural resources entirely","The environment is harmed faster"], correctAnswer:"They tend to help protect the environment more effectively since they understand it best", explanation:"Paragraph 4 states that people who depend directly on the environment often understand best how to protect it, which is why including them in decisions matters.", points:1 }
+      ]
+    };
+
+    const passageParagraphs = [
+      ["p1", "Our planet is facing serious environmental challenges, from rising global temperatures to plastic pollution in the oceans and the rapid loss of forests. Scientists warn that if these problems are not addressed soon, future generations may inherit a world with fewer natural resources and a less stable climate. In response, many governments, organizations, and individuals have turned to the idea of sustainable development — a way of meeting today's needs without compromising the ability of future generations to meet their own needs. This approach rests on three connected pillars: environmental protection, economic growth, and social well-being."],
+      ["p2", "The environmental pillar focuses on protecting natural resources and reducing damage to ecosystems. This includes switching from fossil fuels to renewable energy sources such as solar and wind power, which produce far less carbon dioxide. It also involves protecting forests and biodiversity, since healthy ecosystems absorb carbon and support countless species of plants and animals. Simple actions like recycling, reducing plastic use, and conserving water all contribute to lowering humanity's overall impact on the planet."],
+      ["p3", "The economic pillar shows that protecting the environment does not have to mean stopping economic growth. Instead, many businesses are adopting sustainable practices, such as reducing waste, using eco-friendly materials, and investing in clean technology. These changes have created new employment opportunities, often called \"green jobs,\" in fields like renewable energy, sustainable agriculture, and environmental engineering. A growing number of companies now realize that long-term profit depends on using resources responsibly rather than exhausting them."],
+      ["p4", "The social pillar reminds us that sustainable development must also benefit people, not just the environment or the economy. This means ensuring that all communities, especially the poorest ones, have access to clean water, quality education, and reliable healthcare. It also involves including local communities in decisions that affect their land and resources, since people who depend directly on the environment often understand best how to protect it. Without this social dimension, environmental and economic progress would only benefit a small part of society."],
+      ["p5", "Ultimately, saving our planet requires cooperation between governments, businesses, and ordinary citizens. Small individual actions, such as saving energy at home or choosing reusable products, matter, but they are most powerful when combined with strong government policies and responsible business practices. Sustainable development is not simply an environmental slogan; it is a practical roadmap for building a future where the planet, the economy, and human communities can all thrive together. The choices made today will determine what kind of world is left for tomorrow."]
+    ];
+
+    const correctMessages = ["Excellent!", "Great Job!", "Perfect!", "Keep Going!"];
+    const incorrectMessages = ["Almost!", "Review the passage.", "Keep learning!", "You'll get the next one!"];
+    let currentIndex = 0;
+    let answers = [];
+    let selectedEvidenceId = null;
+    let finalTime = 0;
+
+    const $ = (id) => document.getElementById(id);
+
+    /* Timer module runs separately from rendering and preserves time during navigation. */
+    const timer = (() => {
+      let seconds = 0;
+      let intervalId = null;
+      const format = value => `${String(Math.floor(value / 60)).padStart(2, "0")}:${String(value % 60).padStart(2, "0")}`;
+      const paint = () => { $("timer-stat").textContent = `Timer ${format(seconds)}`; };
+      return {
+        start() {
+          if (intervalId) return;
+          intervalId = setInterval(() => { seconds += 1; paint(); }, 1000);
+          paint();
+        },
+        pause() { clearInterval(intervalId); intervalId = null; },
+        reset() { this.pause(); seconds = 0; paint(); },
+        value() { return seconds; },
+        format
+      };
+    })();
+
+    /* Passage panel module manages normal reading mode and evidence selection mode. */
+    const passagePanel = (() => {
+      const card = $("passage-card");
+      const toggle = $("passage-toggle");
+      const body = $("passage-body");
+
+      function renderParagraphs(target, reviewState = null) {
+        target.innerHTML = "";
+        passageParagraphs.forEach(([id, text], index) => {
+          const paragraph = document.createElement("div");
+          paragraph.className = "passage-paragraph";
+          paragraph.dataset.paragraphId = id;
+          paragraph.innerHTML = `<span class="paragraph-number">${index + 1}</span><span class="paragraph-text"></span>`;
+          paragraph.querySelector(".paragraph-text").textContent = text;
+          if (reviewState) {
+            if (reviewState.correctParagraphId === id) paragraph.classList.add("evidence-correct");
+            if (reviewState.selectedParagraphId === id && id !== reviewState.correctParagraphId) paragraph.classList.add("evidence-wrong");
+          }
+          target.appendChild(paragraph);
+        });
+      }
+
+      function setOpen(open) {
+        card.classList.toggle("is-open", open);
+        toggle.setAttribute("aria-expanded", String(open));
+        $("passage-show-label").hidden = open;
+        $("passage-hide-label").hidden = !open;
+      }
+
+      function clearEvidenceState() {
+        selectedEvidenceId = null;
+        body.classList.remove("evidence-mode");
+        body.querySelectorAll(".passage-paragraph").forEach(p => {
+          p.classList.remove("selected", "evidence-correct", "evidence-wrong");
+          p.removeAttribute("tabindex");
+          p.onclick = null;
+        });
+      }
+
+      function enableEvidence(question) {
+        setOpen(true);
+        body.classList.add("evidence-mode");
+        body.querySelectorAll(".passage-paragraph").forEach(paragraph => {
+          paragraph.tabIndex = 0;
+          paragraph.onclick = () => {
+            if (answers[currentIndex]?.locked) return;
+            selectedEvidenceId = paragraph.dataset.paragraphId;
+            body.querySelectorAll(".passage-paragraph").forEach(p => p.classList.toggle("selected", p === paragraph));
+            const checkButton = $("check-evidence-button");
+            if (checkButton) checkButton.disabled = false;
+            sound("click");
+          };
+        });
+        setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "start" }), 80);
+      }
+
+      toggle.addEventListener("click", () => setOpen(!card.classList.contains("is-open")));
+      renderParagraphs(body);
+      return { renderParagraphs, setOpen, clearEvidenceState, enableEvidence };
+    })();
+
+    /* Web Audio feedback sounds are initiated only after user interactions. */
+    function sound(kind) {
+      if (!window.AudioContext && !window.webkitAudioContext) return;
+      const audio = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audio.createOscillator();
+      const gain = audio.createGain();
+      const frequencies = { correct: 660, wrong: 220, click: 440, complete: 780 };
+      oscillator.frequency.value = frequencies[kind] || 440;
+      oscillator.type = kind === "wrong" ? "sine" : "triangle";
+      gain.gain.setValueAtTime(.08, audio.currentTime);
+      gain.gain.exponentialRampToValueAtTime(.001, audio.currentTime + (kind === "complete" ? .55 : .18));
+      oscillator.connect(gain).connect(audio.destination);
+      oscillator.start();
+      oscillator.stop(audio.currentTime + (kind === "complete" ? .55 : .18));
+    }
+
+    function shuffled(items) {
+      const copy = [...items];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function currentQuestion() { return quizConfig.questions[currentIndex]; }
+    function randomMessage(list) { return list[Math.floor(Math.random() * list.length)]; }
+
+    function updateStats() {
+      const answered = answers.filter(Boolean);
+      const correct = answered.filter(answer => answer.isCorrect).length;
+      $("correct-stat").textContent = `✅ Correct: ${correct}`;
+      $("wrong-stat").textContent = `❌ Wrong: ${answered.length - correct}`;
+      $("remaining-stat").textContent = `Remaining: ${quizConfig.questions.length - answered.length}`;
+      $("score-stat").textContent = `Score: ${correct} /15`;
+    }
+
+    function showFeedback(answer, question) {
+      const feedback = $("feedback");
+      feedback.className = `feedback show ${answer.isCorrect ? "correct-feedback" : "wrong-feedback"}`;
+      feedback.innerHTML = `<strong>${answer.isCorrect ? randomMessage(correctMessages) : randomMessage(incorrectMessages)}</strong><span>${question.explanation}</span>`;
+    }
+
+    function updateNavigation() {
+      const answer = answers[currentIndex];
+      $("previous-button").disabled = currentIndex === 0;
+      $("next-button").disabled = !answer?.locked;
+      $("next-button").textContent = currentIndex === quizConfig.questions.length - 1 ? "Finish ▶" : "Next ▶";
+      $("question-counter").textContent = `${currentIndex + 1} / ${quizConfig.questions.length}`;
+    }
+
+    /* TYPE A renderer: one click immediately locks the answer. */
+    function renderSingleChoice(question, savedAnswer) {
+      $("task-area").textContent = question.task;
+      const choices = savedAnswer?.choiceOrder || (quizConfig.randomizeChoices ? shuffled(question.choices) : question.choices);
+      const list = document.createElement("div");
+      list.className = "choice-list";
+
+      choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "choice-button";
+        button.dataset.choice = choice;
+        button.textContent = `${index + 1}. ${choice}`;
+
+        if (savedAnswer?.locked) {
+          button.disabled = true;
+          if (choice === question.correctAnswer) button.classList.add("correct");
+          if (!savedAnswer.isCorrect && choice === savedAnswer.selectedAnswer) button.classList.add("wrong");
+        } else {
+          button.addEventListener("click", () => evaluateSingleChoice(choice, choices));
+        }
+        list.appendChild(button);
+      });
+
+      $("answer-area").appendChild(list);
+      if (savedAnswer?.locked) showFeedback(savedAnswer, question);
+    }
+
+    function evaluateSingleChoice(choice, choiceOrder) {
+      if (answers[currentIndex]?.locked) return;
+      const question = currentQuestion();
+      const isCorrect = choice === question.correctAnswer;
+      answers[currentIndex] = { locked: true, selectedAnswer: choice, isCorrect, choiceOrder };
+      sound(isCorrect ? "correct" : "wrong");
+      updateStats();
+      renderQuestion();
+    }
+
+    /* TYPE B renderer: selection is editable until Check Evidence evaluates the paragraph. */
+    function renderEvidenceQuestion(question, savedAnswer) {
+      $("task-area").textContent = question.claim;
+      const button = document.createElement("button");
+      button.id = "check-evidence-button";
+      button.type = "button";
+      button.className = "check-evidence";
+      button.textContent = "Check Evidence";
+      button.disabled = !selectedEvidenceId && !savedAnswer?.locked;
+
+      if (savedAnswer?.locked) {
+        button.disabled = true;
+        const paragraphs = $("passage-body").querySelectorAll(".passage-paragraph");
+        paragraphs.forEach(p => {
+          if (p.dataset.paragraphId === question.correctParagraphId) p.classList.add("evidence-correct");
+          if (!savedAnswer.isCorrect && p.dataset.paragraphId === savedAnswer.selectedParagraphId) p.classList.add("evidence-wrong");
+        });
+        showFeedback(savedAnswer, question);
+      } else {
+        button.addEventListener("click", () => evaluateEvidence(question));
+      }
+      $("answer-area").appendChild(button);
+    }
+
+    function evaluateEvidence(question) {
+      if (!selectedEvidenceId || answers[currentIndex]?.locked) return;
+      const isCorrect = selectedEvidenceId === question.correctParagraphId;
+      answers[currentIndex] = { locked: true, selectedParagraphId: selectedEvidenceId, isCorrect };
+      passagePanel.clearEvidenceState();
+      const paragraphs = $("passage-body").querySelectorAll(".passage-paragraph");
+      paragraphs.forEach(p => {
+        if (p.dataset.paragraphId === question.correctParagraphId) p.classList.add("evidence-correct");
+        if (!isCorrect && p.dataset.paragraphId === selectedEvidenceId) p.classList.add("evidence-wrong");
+      });
+      sound(isCorrect ? "correct" : "wrong");
+      updateStats();
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const question = currentQuestion();
+      const savedAnswer = answers[currentIndex];
+      selectedEvidenceId = null;
+      $("question-instruction").textContent = question.question;
+      $("answer-area").innerHTML = "";
+      $("feedback").className = "feedback";
+      $("feedback").innerHTML = "";
+
+      passagePanel.clearEvidenceState();
+      if (question.type === "evidence-click") {
+        passagePanel.setOpen(true);
+        if (!savedAnswer?.locked) passagePanel.enableEvidence(question);
+        renderEvidenceQuestion(question, savedAnswer);
+      } else {
+        renderSingleChoice(question, savedAnswer);
+      }
+      updateNavigation();
+      updateStats();
+    }
+
+    function nextQuestion() {
+      if (!answers[currentIndex]?.locked) return;
+      if (currentIndex === quizConfig.questions.length - 1) showResults();
+      else { currentIndex += 1; renderQuestion(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+    }
+
+    function previousQuestion() {
+      if (currentIndex === 0) return;
+      currentIndex -= 1;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function score() { return answers.filter(answer => answer?.isCorrect).length; }
+
+    function remarkFor(value) {
+      if (value <= 7) return "Fail";
+      if (value <= 9) return "Pass";
+      if (value <= 11) return "Fairly Good";
+      if (value === 12) return "Good";
+      if (value === 13) return "Very Good";
+      return "Excellent!";
+    }
+
+    function groupedBreakdown() {
+      const order = ["Best Title", "True / False / Not Given", "Multiple Choice", "Find the Evidence", "Vocabulary in Context", "Reference Words", "Inference", "Cause & Effect"];
+      return order.map(category => {
+        const indexes = quizConfig.questions.map((q, i) => q.category === category ? i : -1).filter(i => i >= 0);
+        return { category, correct: indexes.filter(i => answers[i]?.isCorrect).length, total: indexes.length };
+      });
+    }
+
+    function animateRemark(finalRemark) {
+      const remark = $("remark");
+      const all = ["Fail", "Pass", "Fairly Good", "Good", "Very Good", "Excellent!"];
+      let count = 0;
+      const cycle = setInterval(() => {
+        remark.textContent = all[count % all.length];
+        count += 1;
+        if (count >= 20) {
+          clearInterval(cycle);
+          remark.textContent = finalRemark;
+        }
+      }, 145);
+    }
+
+    function showResults() {
+      timer.pause();
+      finalTime = timer.value();
+      $("quiz-stage").classList.add("hidden");
+      $("result-page").classList.add("active");
+      const finalScore = score();
+      const finalRemark = remarkFor(finalScore);
+      const attempts = Number(localStorage.getItem("english2bacAttempts") || 0) + 1;
+      const bestScore = Math.max(Number(localStorage.getItem("english2bacBestScore") || 0), finalScore);
+
+      localStorage.setItem("english2bacAttempts", attempts);
+      localStorage.setItem("english2bacBestScore", bestScore);
+      localStorage.setItem("english2bacLastScore", finalScore);
+      localStorage.setItem("english2bacTimeTaken", timer.format(finalTime));
+
+      $("final-score-badge").textContent = `${finalScore} /15`;
+      animateRemark(finalRemark);
+      const encouragement = {
+        "Fail": "Keep practicing —",
+        "Pass": "Nice effort —",
+        "Fairly Good": "Good progress —",
+        "Good": "Well done —",
+        "Very Good": "Great work —",
+        "Excellent!": "Excellent work!"
+      }[finalRemark];
+
+      $("reading-score-line").textContent = finalRemark === "Excellent!"
+        ? `Reading Score: ${finalScore}/15\nExcellent work! You correctly answered ${finalScore} out of 15 questions.`
+        : `Reading Score: ${finalScore}/15\n${encouragement}, You correctly answered ${finalScore} out of 15 questions.`;
+
+      const correct = finalScore;
+      const wrong = 15 - correct;
+      const breakdown = groupedBreakdown();
+      $("summary-list").innerHTML = `
+        <div><strong>Final Score:</strong> ${finalScore}/15</div>
+        <div><strong>Correct Answers:</strong> ${correct}</div>
+        <div><strong>Wrong Answers:</strong> ${wrong}</div>
+        <div><strong>Accuracy Percentage:</strong> ${Math.round((correct / 15) * 100)}%</div>
+        <div><strong>Time Taken:</strong> ${timer.format(finalTime)}</div>
+        <div><strong>Number of Attempts:</strong> ${attempts}</div>
+        <div><strong>Best Score:</strong> ${bestScore}/15</div>
+        <div class="task-breakdown"><strong>Per-task breakdown:</strong><ul>${breakdown.map(item => `<li>${item.category}: ${item.correct}/${item.total}</li>`).join("")}</ul></div>
+        <div class="task-breakdown"><strong>Total Time Taken:</strong> ${timer.format(finalTime)}</div>
+      `;
+      sound("complete");
+      if (finalScore >= 14) launchConfetti();
+    }
+
+    function launchConfetti() {
+      const colors = ["#2563eb", "#16a34a", "#f59e0b", "#dc2626", "#7c3aed"];
+      for (let i = 0; i < 75; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti-piece";
+        piece.style.background = colors[i % colors.length];
+        piece.style.left = `${Math.random() * 100}%`;
+        piece.style.top = `${-10 - Math.random() * 25}px`;
+        piece.style.animationDelay = `${Math.random() * .8}s`;
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 4500);
+      }
+    }
+
+    function renderReview() {
+      $("result-page").classList.remove("active");
+      $("review-page").classList.add("active");
+      const review = $("review-content");
+      review.innerHTML = "";
+      groupedBreakdown().forEach(group => {
+        const groupElement = document.createElement("section");
+        groupElement.className = "review-group";
+        groupElement.innerHTML = `<h2>${group.category}</h2>`;
+        quizConfig.questions.forEach((question, index) => {
+          if (question.category !== group.category) return;
+          const answer = answers[index];
+          const item = document.createElement("article");
+          item.className = `review-item ${answer.isCorrect ? "review-correct" : "review-wrong"}`;
+          if (question.type === "single-choice") {
+            item.innerHTML = `<p><strong>Question ${index + 1}:</strong> ${question.task}</p><p><strong>Student Answer:</strong> ${answer.selectedAnswer}</p><p><strong>Correct Answer:</strong> ${question.correctAnswer}</p><p><strong>Explanation:</strong> ${question.explanation}</p>`;
+          } else {
+            const selectedNumber = Number(answer.selectedParagraphId.replace("p", ""));
+            const correctNumber = Number(question.correctParagraphId.replace("p", ""));
+            item.innerHTML = `<p><strong>Question ${index + 1} Claim:</strong> ${question.claim}</p><p><strong>Student's Selected Paragraph:</strong> ${selectedNumber}</p><p><strong>Correct Paragraph:</strong> ${correctNumber}</p><p><strong>Explanation:</strong> ${question.explanation}</p>`;
+          }
+          groupElement.appendChild(item);
+        });
+        review.appendChild(groupElement);
+      });
+      renderReviewPassage();
+    }
+
+    function renderReviewPassage() {
+      const evidenceAnswers = quizConfig.questions.map((q, i) => q.type === "evidence-click" ? { ...q, ...answers[i] } : null).filter(Boolean);
+      const body = $("review-passage-body");
+      passagePanel.renderParagraphs(body);
+      evidenceAnswers.forEach(answer => {
+        body.querySelectorAll(".passage-paragraph").forEach(p => {
+          if (p.dataset.paragraphId === answer.correctParagraphId) p.classList.add("evidence-correct");
+          if (!answer.isCorrect && p.dataset.paragraphId === answer.selectedParagraphId) p.classList.add("evidence-wrong");
+        });
+      });
+    }
+
+    function saveResults() {
+      const breakdown = groupedBreakdown().map(item => `${item.category}: ${item.correct}/${item.total}`).join("\n");
+      const text = `English2BAC Reading Quiz\nUNIT 4 / SUSTAINABILITY / READING COMPREHENSION\n\nFinal Score: ${score()}/15\nCorrect Answers: ${score()}\nWrong Answers: ${15 - score()}\nAccuracy: ${Math.round((score() / 15) * 100)}%\nTime Taken: ${timer.format(finalTime)}\n\nPer-task breakdown:\n${breakdown}`;
+      const blob = new Blob([text], { type: "text/plain" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "english2bac-reading-quiz-results.txt";
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
+    function restartQuiz() {
+      currentIndex = 0;
+      answers = [];
+      selectedEvidenceId = null;
+      finalTime = 0;
+      timer.reset();
+      passagePanel.clearEvidenceState();
+      passagePanel.setOpen(false);
+      $("review-page").classList.remove("active");
+      $("result-page").classList.remove("active");
+      $("quiz-stage").classList.remove("hidden");
+      renderQuestion();
+      timer.start();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    $("previous-button").addEventListener("click", previousQuestion);
+    $("next-button").addEventListener("click", nextQuestion);
+    $("review-button").addEventListener("click", renderReview);
+    $("back-results-button").addEventListener("click", () => {
+      $("review-page").classList.remove("active");
+      $("result-page").classList.add("active");
+    });
+    $("print-button").addEventListener("click", () => window.print());
+    $("save-button").addEventListener("click", saveResults);
+    $("restart-button").addEventListener("click", restartQuiz);
+    $("review-passage-toggle").addEventListener("click", () => {
+      const panel = $("review-passage");
+      const isOpen = panel.classList.toggle("show");
+      $("review-passage-toggle").textContent = isOpen ? "📖 Hide Passage" : "📖 Show Passage";
+    });
+
+    document.addEventListener("keydown", event => {
+      if ($("result-page").classList.contains("active") || $("review-page").classList.contains("active")) return;
+      const question = currentQuestion();
+      if (question.type === "single-choice" && !answers[currentIndex]?.locked && /^[1-4]$/.test(event.key)) {
+        const buttons = [...document.querySelectorAll(".choice-button")];
+        const button = buttons[Number(event.key) - 1];
+        if (button) button.click();
+      }
+      if (event.key === "ArrowLeft") previousQuestion();
+      if ((event.key === "ArrowRight" || event.key === "Enter" || event.key === " ") && answers[currentIndex]?.locked) {
+        event.preventDefault();
+        nextQuestion();
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderQuestion();
+      timer.start();
+    });
+  </script>
+ 
+</body></html>
