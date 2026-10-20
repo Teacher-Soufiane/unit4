@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sustainable Development Vocabulary Quiz</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&amp;family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#0a376b;--blue:#1267bd;--softblue:#e9f4ff;--green:#159447;--red:#d9364a;--gray:#f3f6f9;--ink:#172033}
+    *{box-sizing:border-box} body{margin:0;font-family:Poppins,Cairo,sans-serif;color:var(--ink);background:#eaf0f7}
+    button{font:inherit}.quiz-shell{width:100%;min-height:calc(100 * min(var(--vh,1vh),1vh));background:linear-gradient(145deg,#edf5fb,#f9fbfe);padding:14px}
+    .quiz-card{max-width:1180px;margin:auto;background:white;border-radius:24px;overflow:hidden;box-shadow:0 18px 55px #12355d22}
+    .top-header{background:#dff1ff;padding:12px 20px;color:var(--navy);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px}
+    .header-teacher-img,.header-logo-img{height:64px;width:auto;max-width:none;object-fit:contain;display:block}.header-logo-img{filter:brightness(1.1)}
+    .brand{text-align:center;min-width:0}.brand h1{margin:0;font-size:clamp(1.1rem,2.6vw,1.85rem);font-weight:800;letter-spacing:.02em}.brand p{margin:3px 0 0;font-size:clamp(.64rem,1.5vw,.86rem);color:#d8eaff;white-space:pre-line}
+    .meta-strip{display:grid;grid-template-columns:1fr 1.4fr 1fr;gap:8px;background:#f4f8fc;padding:11px 22px;border-bottom:1px solid #d9e6f2;text-align:center;font-weight:800;color:var(--navy);font-size:clamp(.68rem,1.5vw,.92rem)}
+    .meta-strip span:first-child{text-align:left}.meta-strip span:last-child{text-align:right}
+    .progress-track{height:7px;background:#d9e4ef}.progress-fill{height:100%;background:linear-gradient(90deg,#14a656,#58ce7a);transition:width .45s ease;width:0}
+    .main-layout{padding:20px;display:block}.main-layout>section{min-width:0}
+    .category-bar{background:#f4b622;color:#492b00;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:10px 14px;border-radius:10px;text-align:center;font-size:.8rem}
+    .question-box{background:linear-gradient(135deg,#0d4f96,#147acb);color:white;border-radius:18px;padding:20px;margin-top:13px;box-shadow:0 10px 20px #0d4f9633}
+    .question-box h2{margin:0;font-size:clamp(1rem,2.3vw,1.35rem);line-height:1.45;font-weight:800}
+    .task-area{margin:14px 0;background:#f6f9fc;border:1px solid #e0e9f1;border-left:5px solid var(--blue);border-radius:12px;padding:18px;font-size:clamp(1rem,2vw,1.2rem);font-weight:600;line-height:1.7}
+    .target-word{display:block;background:transparent;color:#794700;border:0;border-radius:0;padding:0;margin:0 0 10px;font-weight:800;letter-spacing:.06em;text-align:center}
+    .choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.choice{border:2px solid #d8e2ec;background:white;border-radius:12px;padding:14px 16px;text-align:left;font-weight:700;min-height:57px;transition:.2s;cursor:pointer;box-shadow:0 3px 8px #0a376b10}
+    .choice:hover:not(:disabled){border-color:#2781d4;transform:translateY(-2px)}.choice:focus-visible,.nav-btn:focus-visible,.action-btn:focus-visible{outline:3px solid #f4b622;outline-offset:2px}
+    .choice.selected{background:#dceeff;border-color:#1775c6;color:#084b86}.choice.correct{background:#dcf7e5;border-color:var(--green);color:#096c31}.choice.wrong{background:#ffe4e7;border-color:var(--red);color:#a31e2d}.choice.muted{background:#edf0f3;border-color:#b9c0c8;color:#65707c}
+    .option-key{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:7px;background:#edf3f8;margin-right:9px;font-size:.75rem}.tag{font-size:.68rem;border-radius:99px;padding:3px 7px;margin-left:7px;background:#ffe1e5;color:#a31e2d}
+    .feedback{margin-top:14px;border-radius:12px;padding:14px;display:none}.feedback.show{display:block}.feedback.good{background:#e4f8eb;color:#086a30}.feedback.bad{background:#fff0f1;color:#a21f2d}.feedback strong{display:block;margin-bottom:3px}
+    .bottom-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:18px}.nav-btn,.action-btn{border:0;border-radius:11px;padding:10px 14px;font-weight:800;cursor:pointer;transition:.2s}.nav-btn{background:var(--navy);color:white}.nav-btn:disabled{opacity:.4;cursor:not-allowed}.nav-btn:not(:disabled):hover,.action-btn:hover{transform:translateY(-1px);filter:brightness(1.08)}.counter{font-weight:800;color:var(--navy)}
+    .side-panel{background:#f7fafc;border:1px solid #e0eaf3;border-radius:18px;padding:15px;height:max-content;margin-top:20px;display:flex;align-items:center;gap:10px;white-space:nowrap}.stat-title{display:none}.stat-row{display:flex;flex:1;align-items:center;justify-content:space-between;gap:6px;padding:9px 6px;border-bottom:1px solid #e3ebf2;font-size:.86rem;font-weight:700}.score-value{font-size:1.25rem;color:var(--navy);font-weight:800;margin:0;flex:1;text-align:center}.timer{background:var(--navy);color:white;border-radius:10px;text-align:center;padding:9px;font-size:1.15rem;font-weight:800;letter-spacing:.08em;margin:0;flex:0 0 auto}
+    
+    .results{display:none;padding:28px}.results.active{display:block}.result-head{text-align:center}.result-head h2{margin:0;color:var(--navy);font-size:clamp(1.5rem,3vw,2.2rem)}.result-head p{font-weight:700;color:#61728a}.score-badge{width:180px;height:180px;border-radius:50%;margin:18px auto;background:linear-gradient(135deg,#0b3f78,#1684ca);border:8px solid #d5edff;color:#fff;display:grid;place-content:center;box-shadow:0 13px 25px #0d4f9644}.score-badge b{font-size:2.4rem}.score-badge span{font-size:.8rem}.remark{min-height:50px;font-size:1.7rem;font-weight:800;color:#e89b00}.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:20px 0}.summary-card{background:#f5f9fc;padding:13px;border-radius:12px;border:1px solid #e1eaf2}.summary-card span{display:block;font-size:.74rem;color:#66778e;font-weight:700}.summary-card strong{color:var(--navy);font-size:1.07rem}.breakdown{background:#f7fafc;border-radius:15px;padding:16px}.breakdown h3{margin:0 0 9px;color:var(--navy)}.break-line{display:flex;justify-content:space-between;border-bottom:1px solid #e1e9f1;padding:8px 0;font-size:.9rem;font-weight:700}.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:22px}.action-btn{background:var(--navy);color:#fff}.action-btn.secondary{background:#e7f2fc;color:var(--navy)}.action-btn.green{background:var(--green)}
+    .review{display:none;padding:22px}.review.active{display:block}.review h2{color:var(--navy)}.review-group{margin:18px 0}.review-group h3{background:var(--navy);color:#fff;padding:10px 13px;border-radius:10px;margin-bottom:9px}.review-item{border:1px solid #dce6ef;border-radius:12px;padding:14px;margin:9px 0}.review-item p{margin:5px 0;font-size:.9rem}.answer-good{color:#087430;font-weight:800}.answer-bad{color:#b32031;font-weight:800}
+    .confetti{position:fixed;width:10px;height:14px;top:-20px;z-index:10;animation:fall 3.5s linear forwards}@keyframes fall{to{transform:translate(var(--x),1100px) rotate(800deg);opacity:0}}@media print{.quiz-shell{background:#fff;padding:0}.quiz-card{box-shadow:none}.top-header,.progress-track,.main-layout,.actions,.review{display:none!important}.results{display:block!important}.result-head p{display:block}}@media(min-width:600px){.header-teacher-img,.header-logo-img{height:80px}}@media(min-width:1024px){.header-teacher-img,.header-logo-img{height:96px}}@media(max-width:700px){.quiz-shell{padding:0}.quiz-card{border-radius:0;min-height:calc(100 * min(var(--vh,1vh),1vh)}.top-header{padding:9px 10px;gap:7px}.brand p{line-height:1.25}.meta-strip{padding:9px 10px;gap:4px}.main-layout{grid-template-columns:1fr;padding:14px}.side-panel{order:2}.choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.choice{padding:11px 9px;font-size:.84rem}.results,.review{padding:18px}.summary-grid{grid-template-columns:1fr 1fr}}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  
+  
+ <script>(function(){var ok=true;try{window.localStorage.getItem("__t")}catch(e){ok=false}
+if(!ok){var m={};try{Object.defineProperty(window,"localStorage",{configurable:true,value:{
+getItem:function(k){return Object.prototype.hasOwnProperty.call(m,k)?m[k]:null},
+setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}}}})}catch(e2){}}})();</script></head>
+ <body>
+  <div class="quiz-shell">
+   <div class="quiz-card">
+    <header class="top-header">
+     <img class="header-teacher-img" loading="lazy" src="teacher.png" alt="Teacher Soufiane">
+     <div class="brand">
+      <h1 class=""></h1>
+      <p class=""></p>
+     </div><img class="header-logo-img" loading="lazy" src="logo.png" alt="Level-UP 2BAC">
+    </header>
+    <div class="meta-strip">
+     <span class="">UNIT: UNIT 4</span> <span class=""></span> <span class="">VOCABULARY - QUIZ 2</span>
+    </div>
+    <div class="progress-track">
+     <div id="progressFill" class="progress-fill"></div>
+    </div>
+    <main id="quizView" class="main-layout">
+     <section aria-live="polite">
+      <div class="question-box">
+       <h2 id="questionInstruction"></h2>
+      </div>
+      <div id="taskArea" class="task-area"></div>
+      <div id="choicesArea" class="choices"></div>
+      <div id="feedbackArea" class="feedback"></div>
+      <div class="bottom-nav">
+       <button id="previousButton" class="nav-btn" type="button">◀ Previous</button>
+       <div id="counter" class="counter">
+        1 / 20
+       </div><button id="nextButton" class="nav-btn" type="button">Next ▶</button>
+      </div>
+     </section>
+     <aside class="side-panel" aria-label="Quiz statistics">
+      <p class="stat-title">Live statistics</p>
+      <div class="stat-row"><span>✅ Correct</span><strong id="correctCount">0</strong>
+      </div>
+      <div class="stat-row"><span>❌ Wrong</span><strong id="wrongCount">0</strong>
+      </div>
+      <div class="stat-row"><span>Remaining</span><strong id="remainingCount">20</strong>
+      </div>
+      <p class="stat-title" style="margin-top:14px">Current Score</p>
+      <div id="scoreDisplay" class="score-value">
+       0.00 /20
+      </div>
+      <div id="timerDisplay" class="timer">
+       00:00
+      </div>
+     </aside>
+    </main>
+    <section id="resultsView" class="results" aria-live="polite">
+     <div class="result-head">
+      <h2 class=""></h2>
+      <p id="resultMeta"></p>
+      <div class="score-badge"><b id="finalScore">0.00</b><span>/20</span>
+      </div>
+      <div id="remark" class="remark">
+       ...
+      </div>
+     </div>
+     <div class="summary-grid">
+      <div class="summary-card"><span>Correct Answers</span><strong id="finalCorrect"></strong>
+      </div>
+      <div class="summary-card"><span>Wrong Answers</span><strong id="finalWrong"></strong>
+      </div>
+      <div class="summary-card"><span>Accuracy Percentage</span><strong id="finalAccuracy"></strong>
+      </div>
+      <div class="summary-card"><span>Time Taken</span><strong id="finalTime"></strong>
+      </div>
+      <div class="summary-card"><span>Number of Attempts</span><strong id="attemptsValue"></strong>
+      </div>
+      <div class="summary-card"><span>Best Score</span><strong id="bestScoreValue"></strong>
+      </div>
+     </div>
+     <div class="breakdown">
+      <h3>Performance Summary</h3>
+      <div id="breakdownList"></div>
+     </div>
+     <div class="actions">
+      <button id="reviewButton" class="action-btn secondary" type="button">Review My Answers</button> <button id="printButton" class="action-btn secondary" type="button">Print Results</button> <button id="saveButton" class="action-btn green" type="button">Save Results</button> <button id="restartButton" class="action-btn" type="button">Restart Quiz</button>
+     </div>
+    </section>
+    <section id="reviewView" class="review">
+     <div class="flex items-center justify-between gap-3 flex-wrap">
+      <h2>Review My Answers</h2><button id="backResultsButton" class="action-btn" type="button">Back to Results</button>
+     </div>
+     <div id="reviewContent"></div>
+    </section>
+   </div>
+  </div>
+  
+  <script>
+    /* Quiz configuration and source content */
+    const quizConfig = {
+      unit:"UNIT 4", title:"SUSTAINABLE DEVELOPMENT", lesson:"VOCABULARY - QUIZ 2", teacherName:"Teacher Soufiane",
+      teacherImage:"https://i.imgur.com/vvyZAnr.png", logo:"https://imgur.com/XPOYllA",
+      randomizeQuestions:false, randomizeChoices:true, timerEnabled:true, timerMode:"countup", countdownSeconds:600, showConfetti:true, enableSounds:true,
+      questions:[
+        ["single-choice","Choose the word that matches the definition","CHOOSE THE WORD THAT MATCHES THE DEFINITION.","Medical services provided to maintain or improve people's physical and mental wellbeing.",["health care","water pollution","social justice","climate change"],"health care","Health care refers to medical services aimed at maintaining or improving people's wellbeing."],
+        ["single-choice","Choose the word that matches the definition","CHOOSE THE WORD THAT MATCHES THE DEFINITION.","The contamination of rivers, lakes, or oceans with harmful substances.",["water pollution","health care","social justice","climate change"],"water pollution","Water pollution is the contamination of water sources with harmful substances."],
+        ["single-choice","Choose the word that matches the definition","CHOOSE THE WORD THAT MATCHES THE DEFINITION.","Fair and equal treatment of all members of society regarding rights, opportunities, and resources.",["social justice","health care","water pollution","climate change"],"social justice","Social justice refers to fairness and equality within society regarding rights and opportunities."],
+        ["single-choice","Choose the word that matches the definition","CHOOSE THE WORD THAT MATCHES THE DEFINITION.","Long-term shifts in temperatures and weather patterns, largely caused by human activity.",["climate change","health care","water pollution","social justice"],"climate change","Climate change refers to long-term shifts in temperatures and weather patterns, largely driven by human activity."],
+        ["single-choice","Put the word in brackets in its correct form","PUT THE WORD IN BRACKETS IN ITS CORRECT FORM.","After ______, BAC students will join universities for their higher education. (graduate)",["graduation","graduate","graduated","graduating"],"graduation","We need a noun after 'after', so the verb 'graduate' becomes 'graduation'."],
+        ["single-choice","Put the word in brackets in its correct form","PUT THE WORD IN BRACKETS IN ITS CORRECT FORM.","Some scientists ran away because of civil wars, starvation and political ______. (instable)",["instability","instable","unstable","instably"],"instability","We need a noun after 'political', so 'instable' becomes 'instability'."],
+        ["single-choice","Put the word in brackets in its correct form","PUT THE WORD IN BRACKETS IN ITS CORRECT FORM.","The late ______ crisis in Europe made a lot of immigrants return to their homeland. (economy)",["economic","economy","economical","economically"],"economic","We need an adjective before 'crisis', so 'economy' becomes 'economic'."],
+        ["single-choice","Put the word in brackets in its correct form","PUT THE WORD IN BRACKETS IN ITS CORRECT FORM.","Many organizations ______ to the promotion of citizenship values. (contribution)",["contribute","contribution","contributive","contributing"],"contribute","We need a verb after 'organizations', so 'contribution' becomes 'contribute'."],
+        ["single-choice","Fill in the gap with the appropriate word from the list","FILL IN THE GAP WITH THE APPROPRIATE WORD FROM THE LIST.","Burning ______ fuels like coal and oil is a major cause of climate change.",["fossil","climate","healthcare","risk"],"fossil","'Fossil' fits because 'fossil fuels' like coal and oil are a major cause of climate change."],
+        ["single-choice","Fill in the gap with the appropriate word from the list","FILL IN THE GAP WITH THE APPROPRIATE WORD FROM THE LIST.","Oxfam works worldwide to fight poverty, while the WHO helps poor people access affordable ______.",["healthcare","fossil","climate","risk"],"healthcare","'Healthcare' fits because the WHO focuses on helping people access affordable medical services."],
+        ["single-choice","Fill in the gap with the appropriate word from the list","FILL IN THE GAP WITH THE APPROPRIATE WORD FROM THE LIST.","Deforestation and pollution pose a serious ______ to future generations.",["risk","fossil","healthcare","climate"],"risk","'Risk' fits because it describes a potential danger to future generations."],
+        ["single-choice","Fill in the gap with the appropriate word from the list","FILL IN THE GAP WITH THE APPROPRIATE WORD FROM THE LIST.","Scientists warn that rising temperatures are a direct result of ______ change caused by human activity.",["climate","fossil","healthcare","risk"],"climate","'Climate' fits because the sentence discusses rising temperatures, which relates to climate change."],
+        ["single-choice","Choose the word that completes the collocation","CHOOSE THE WORD THAT COMPLETES THE COLLOCATION.","Protecting property ______ encourages people to invest and build their own businesses.",["rights","pay","preservation","infrastructure"],"rights","'Property rights' is the correct natural collocation meaning legal ownership protections."],
+        ["single-choice","Choose the word that completes the collocation","CHOOSE THE WORD THAT COMPLETES THE COLLOCATION.","Achieving equal ______ for women remains a major goal of many governments.",["pay","rights","preservation","infrastructure"],"pay","'Equal pay' is the correct natural collocation meaning receiving the same salary regardless of gender."],
+        ["single-choice","Choose the word that completes the collocation","CHOOSE THE WORD THAT COMPLETES THE COLLOCATION.","Forest ______ helps protect endangered species and reduce carbon emissions.",["preservation","rights","pay","infrastructure"],"preservation","'Forest preservation' is the correct natural collocation meaning protecting forests from destruction."],
+        ["single-choice","Choose the word that completes the collocation","CHOOSE THE WORD THAT COMPLETES THE COLLOCATION.","Improving transport ______ makes it easier to connect rural and urban areas.",["infrastructure","rights","pay","preservation"],"infrastructure","'Transport infrastructure' is the correct natural collocation meaning the systems and structures that support transportation."],
+        ["three-synonyms","Three Synonyms Challenge","SELECT THE THREE WORDS THAT ARE SYNONYMS OF THE TARGET WORD.","RESPONSIBLE",["accountable","reliable","dependable","irresponsible"],["accountable","reliable","dependable"],"irresponsible","'Accountable', 'reliable', and 'dependable' all describe being trustworthy and dutiful, like 'responsible'. 'Irresponsible' means the opposite — careless or unreliable."],
+        ["three-synonyms","Three Synonyms Challenge","SELECT THE THREE WORDS THAT ARE SYNONYMS OF THE TARGET WORD.","DESTRUCTION",["devastation","ruin","demolition","creation"],["devastation","ruin","demolition"],"creation","'Devastation', 'ruin', and 'demolition' all describe the act of destroying something, like 'destruction'. 'Creation' means the opposite — bringing something into existence."],
+        ["three-synonyms","Three Synonyms Challenge","SELECT THE THREE WORDS THAT ARE SYNONYMS OF THE TARGET WORD.","STARVATION",["famine","hunger","malnutrition","abundance"],["famine","hunger","malnutrition"],"abundance","'Famine', 'hunger', and 'malnutrition' all describe a severe lack of food, like 'starvation'. 'Abundance' means the opposite — a plentiful supply."],
+        ["three-synonyms","Three Synonyms Challenge","SELECT THE THREE WORDS THAT ARE SYNONYMS OF THE TARGET WORD.","HOMELESS",["displaced","destitute","unsheltered","housed"],["displaced","destitute","unsheltered"],"housed","'Displaced', 'destitute', and 'unsheltered' all describe having no permanent place to live, like 'homeless'. 'Housed' means the opposite — having a place to live."]
+      ]
+    };
+
+    const categoryNames=["Definitions","Word Forms","Word Bank","Collocations","Synonyms Challenge"];
+    const correctMessages=["Excellent!","Great Job!","Perfect!","Keep Going!"];
+    const wrongMessages=["Almost!","Review this rule.","Keep learning!","You'll get the next one!"];
+    const $=id=>document.getElementById(id);
+    const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+    const makeQuestions=()=>quizConfig.questions.map((q,i)=>q[0]==="single-choice"?{id:i,type:q[0],category:q[1],question:q[2],task:q[3],choices:quizConfig.randomizeChoices?shuffle(q[4]):q[4],correctAnswer:q[5],explanation:q[6],points:1}:{id:i,type:q[0],category:q[1],question:q[2],targetWord:q[3],options:quizConfig.randomizeChoices?shuffle(q[4]):q[4],correctSynonyms:q[5],antonym:q[6],explanation:q[7],points:1});
+    let questions=[],current=0,answers={},synonymSelections=[],evaluationDelay=null,completed=false;
+
+    /* Independent timer module */
+    const timer=(()=>{let seconds=0,interval=null,running=false;
+      const format=s=>`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`;
+      const paint=()=>{$("timerDisplay").textContent=format(seconds)};
+      const tick=()=>{if(quizConfig.timerMode==="countdown"){seconds--;if(seconds<=0){seconds=0;pause();autoFinish()}}else seconds++;paint()};
+      const start=()=>{if(!quizConfig.timerEnabled||running)return;running=true;interval=setInterval(tick,1000)};
+      const pause=()=>{running=false;clearInterval(interval)};
+      const reset=()=>{pause();seconds=quizConfig.timerMode==="countdown"?quizConfig.countdownSeconds:0;paint()};
+      const value=()=>seconds;return{start,pause,reset,format,value};
+    })();
+
+    function sound(kind){
+      if(!quizConfig.enableSounds)return;
+      try{const ctx=new (window.AudioContext||window.webkitAudioContext)(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);const map={click:[420,.05],good:[660,.14],bad:[180,.16],finish:[780,.24]};o.frequency.value=map[kind][0];g.gain.setValueAtTime(.06,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+map[kind][1]);o.start();o.stop(ctx.currentTime+map[kind][1])}catch(e){}
+    }
+    function stats(){const a=Object.values(answers),correct=a.filter(x=>x.correct).length;return{correct,wrong:a.length-correct,remaining:20-a.length,score:correct}}
+    function updateChrome(){
+      const s=stats();$("correctCount").textContent=s.correct;$("wrongCount").textContent=s.wrong;$("remainingCount").textContent=s.remaining;$("scoreDisplay").textContent=`${s.score.toFixed(2)} /20`;
+      $("counter").textContent=`${current+1} / 20`;$("progressFill").style.width=`${(Object.keys(answers).length/20)*100}%`;
+      $("previousButton").disabled=current===0;$("nextButton").disabled=!answers[questions[current].id];
+      $("nextButton").textContent=current===19&&answers[questions[current].id]?"Finish Quiz":"Next ▶";renderNavigator();
+    }
+    function renderNavigator(){
+    }
+    function feedback(correct,explanation){
+      const el=$("feedbackArea");el.className=`feedback show ${correct?"good":"bad"}`;el.innerHTML=`<strong>${(correct?correctMessages:wrongMessages)[Math.floor(Math.random()*4)]}</strong><span>${explanation}</span>`;
+    }
+    function selectSingle(choice){
+      const q=questions[current];if(answers[q.id])return;const correct=choice===q.correctAnswer;answers[q.id]={value:choice,correct};sound(correct?"good":"bad");renderQuestion();feedback(correct,q.explanation);updateChrome();
+    }
+    function renderSingle(q){
+      $("taskArea").textContent=q.task;$("choicesArea").innerHTML="";
+      q.choices.forEach((choice,i)=>{const b=document.createElement("button");b.type="button";b.className="choice";b.innerHTML=`<span class="option-key">${i+1}</span>${choice}`;
+        if(answers[q.id]){b.disabled=true;if(choice===q.correctAnswer)b.classList.add("correct");if(choice===answers[q.id].value&&!answers[q.id].correct)b.classList.add("wrong")}else b.onclick=()=>selectSingle(choice);$("choicesArea").appendChild(b)});
+      if(answers[q.id])feedback(answers[q.id].correct,q.explanation);
+    }
+    /* Synonym selection: evaluate only after three choices persist for half a second. */
+    function toggleSynonym(option){
+      const q=questions[current];if(answers[q.id])return;
+      const index=synonymSelections.indexOf(option);if(index>-1)synonymSelections.splice(index,1);else if(synonymSelections.length<3)synonymSelections.push(option);
+      sound("click");clearTimeout(evaluationDelay);renderSynonyms(q);
+      if(synonymSelections.length===3)evaluationDelay=setTimeout(()=>{if(synonymSelections.length===3)evaluateSynonyms(q)},500);
+    }
+    function evaluateSynonyms(q){
+      if(answers[q.id])return;const chosen=[...synonymSelections],correct=q.correctSynonyms.every(x=>chosen.includes(x));answers[q.id]={value:chosen,correct};sound(correct?"good":"bad");renderQuestion();feedback(correct,q.explanation);updateChrome();
+    }
+    function renderSynonyms(q){
+      $("taskArea").innerHTML=`<span class="target-word">${q.targetWord}</span>`;$("choicesArea").innerHTML="";
+      const answer=answers[q.id];
+      q.options.forEach((option,i)=>{const b=document.createElement("button");b.type="button";b.className="choice";b.innerHTML=`<span class="option-key">${i+1}</span>${option}`;
+        if(answer){b.disabled=true;const isSyn=q.correctSynonyms.includes(option),isSelected=answer.value.includes(option);if(isSyn)b.classList.add("correct");else if(isSelected)b.classList.add("wrong");else b.classList.add("muted");
+          if(option===q.antonym)b.innerHTML+=`<span class="tag">${isSelected?"antonym, not a synonym":"antonym"}</span>`;
+        }else{if(synonymSelections.includes(option))b.classList.add("selected");b.onclick=()=>toggleSynonym(option)}$("choicesArea").appendChild(b)});
+      if(answer)feedback(answer.correct,q.explanation);
+    }
+    function renderQuestion(){
+      clearTimeout(evaluationDelay);synonymSelections=[];$("feedbackArea").className="feedback";const q=questions[current];$("questionInstruction").textContent=q.question;
+      if(q.type==="single-choice")renderSingle(q);else renderSynonyms(q);updateChrome();
+    }
+    function next(){if(!answers[questions[current].id])return;if(current===19){finishQuiz();return}current++;renderQuestion()}
+    function previous(){if(current>0){current--;renderQuestion()}}
+    function autoFinish(){if(!completed){const q=questions[current];if(!answers[q.id])answers[q.id]={value:q.type==="single-choice"?"Unanswered":[],correct:false};finishQuiz()}}
+    function remarkFor(score){return score<10?"Fail":score<12?"Pass":score<14?"Fairly Good":score<16?"Good":score<18?"Very Good":"Excellent!"}
+    function finishQuiz(){
+      completed=true;timer.pause();$("quizView").style.display="none";$("resultsView").classList.add("active");const s=stats(),time=timer.format(timer.value());
+      const attempts=Number(localStorage.getItem("sdAttempts")||0)+1,best=Math.max(Number(localStorage.getItem("sdBest")||0),s.score);
+      localStorage.setItem("sdAttempts",attempts);localStorage.setItem("sdBest",best);localStorage.setItem("sdLast",s.score);localStorage.setItem("sdTime",time);
+      $("resultMeta").textContent=`${quizConfig.unit} • ${quizConfig.title} • ${quizConfig.lesson}`;$("finalScore").textContent=s.score.toFixed(2);$("finalCorrect").textContent=s.correct;$("finalWrong").textContent=s.wrong;$("finalAccuracy").textContent=`${((s.correct/20)*100).toFixed(2)}%`;$("finalTime").textContent=time;$("attemptsValue").textContent=attempts;$("bestScoreValue").textContent=`${best.toFixed(2)} /20`;
+      renderBreakdown();animateRemark(remarkFor(s.score));sound("finish");if(s.score>=16&&quizConfig.showConfetti)confetti();
+    }
+    function renderBreakdown(){
+      $("breakdownList").innerHTML="";categoryNames.forEach((name,g)=>{const group=questions.slice(g*4,g*4+4),score=group.filter(q=>answers[q.id]?.correct).length;const line=document.createElement("div");line.className="break-line";line.innerHTML=`<span>${name}</span><strong>${score}/4</strong>`;$("breakdownList").appendChild(line)});
+    }
+    function animateRemark(finalRemark){
+      const el=$("remark"),all=["Fail","Pass","Fairly Good","Good","Very Good","Excellent!"];let n=0,delay=70;
+      (function spin(){el.textContent=all[n++%all.length];if(n<26){delay+=11;setTimeout(spin,delay)}else el.textContent=finalRemark})();
+    }
+    function confetti(){const colors=["#f4b622","#159447","#d9364a","#1676c6","#ffffff"];for(let i=0;i<70;i++){const c=document.createElement("i");c.className="confetti";c.style.left=Math.random()*100+"vw";c.style.background=colors[i%colors.length];c.style.setProperty("--x",(Math.random()-.5)*400+"px");c.style.animationDelay=Math.random()*.8+"s";document.body.appendChild(c);setTimeout(()=>c.remove(),4500)}}
+    function review(){
+      $("resultsView").classList.remove("active");$("reviewView").classList.add("active");const holder=$("reviewContent");holder.innerHTML="";
+      categoryNames.forEach((name,g)=>{const sec=document.createElement("section");sec.className="review-group";sec.innerHTML=`<h3>${name}</h3>`;
+        questions.slice(g*4,g*4+4).forEach((q,i)=>{const a=answers[q.id],card=document.createElement("article");card.className="review-item";
+          if(q.type==="single-choice")card.innerHTML=`<strong>Question ${g*4+i+1}</strong><p>${q.task}</p><p>Student Answer: <span class="${a.correct?"answer-good":"answer-bad"}">${a.value}</span></p><p>Correct Answer: <span class="answer-good">${q.correctAnswer}</span></p><p><b>Explanation:</b> ${q.explanation}</p>`;
+          else card.innerHTML=`<strong>Question ${g*4+i+1} — Target Word: ${q.targetWord}</strong><p>Student's 3 selections: <span class="${a.correct?"answer-good":"answer-bad"}">${a.value.join(", ")||"Unanswered"}</span></p><p>Correct 3 synonyms: <span class="answer-good">${q.correctSynonyms.join(", ")}</span></p><p>Antonym distractor: <span class="answer-bad">${q.antonym}</span></p><p><b>Explanation:</b> ${q.explanation}</p>`;
+          sec.appendChild(card)});holder.appendChild(sec)});
+    }
+    function restart(){questions=makeQuestions();if(quizConfig.randomizeQuestions){for(let g=0;g<5;g++){const group=shuffle(questions.slice(g*4,g*4+4));questions.splice(g*4,4,...group)}}current=0;answers={};completed=false;$("resultsView").classList.remove("active");$("reviewView").classList.remove("active");$("quizView").style.display="grid";timer.reset();timer.start();renderQuestion()}
+    function saveResults(){
+      const s=stats(),text=`SUSTAINABLE DEVELOPMENT VOCABULARY QUIZ 2\n${quizConfig.unit} | ${quizConfig.lesson}\n\nFinal Score: ${s.score.toFixed(2)} /20\nCorrect Answers: ${s.correct}\nWrong Answers: ${s.wrong}\nTime Taken: ${timer.format(timer.value())}\n\n${categoryNames.map((n,g)=>`${n}: ${questions.slice(g*4,g*4+4).filter(q=>answers[q.id]?.correct).length}/4`).join("\n")}`;
+      const link=document.createElement("a");link.href=URL.createObjectURL(new Blob([text],{type:"text/plain"}));link.download="sustainable-development-quiz-results.txt";link.click();URL.revokeObjectURL(link.href);
+    }
+    document.addEventListener("keydown",e=>{if(completed)return;const q=questions[current];if(["1","2","3","4"].includes(e.key)){e.preventDefault();const option=(q.type==="single-choice"?q.choices:q.options)[Number(e.key)-1];if(q.type==="single-choice")selectSingle(option);else toggleSynonym(option)}if(e.key==="ArrowLeft")previous();if(e.key==="ArrowRight"||e.key==="Enter"||e.key===" "){if(answers[q.id])next()}});
+    $("previousButton").onclick=previous;$("nextButton").onclick=next;$("reviewButton").onclick=review;$("backResultsButton").onclick=()=>{$("reviewView").classList.remove("active");$("resultsView").classList.add("active")};$("restartButton").onclick=restart;$("printButton").onclick=()=>window.print();$("saveButton").onclick=saveResults;
+    restart();
+  </script>
+ 
+</body></html>

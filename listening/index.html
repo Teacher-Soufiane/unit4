@@ -1,0 +1,691 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expressing Cause and Effect — Listening Quiz 1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&amp;family=Poppins:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{--navy:#1e3a5f;--blue:#2563eb;--green:#15803d;--red:#b91c1c;--line:#d9e3ef}
+    *{box-sizing:border-box}
+    body{width:100%;margin:0;color:#213349;font-family:Poppins,sans-serif}
+    button{cursor:pointer}
+    button:disabled{cursor:not-allowed;opacity:.48}
+    button:focus-visible,[tabindex]:focus-visible{outline:3px solid #2563eb;outline-offset:3px}
+    .quiz-header{background-color:#eaf4ff;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;padding:12px 24px}
+    .header-teacher-img,.header-logo-img{height:64px;width:auto;max-width:none;object-fit:contain}
+    @media(min-width:600px){.header-teacher-img,.header-logo-img{height:80px}}
+    @media(min-width:1024px){.header-teacher-img,.header-logo-img{height:96px}}
+    @media(max-width:640px){
+      .header-teacher-img,.header-logo-img{height:45px}
+      .quiz-header{padding:8px 12px;gap:5px}
+      .title-line1{font-size:26px!important}
+      .title-line2{font-size:18px!important}
+      .title-line3{font-size:14px!important}
+      .header-title{transform:scale(.63);width:158%;margin-left:-29%;white-space:nowrap}
+      .info-bar{font-size:10px!important;gap:5px}
+      .info-bar>*{min-width:0;overflow-wrap:anywhere}
+    }
+    .header-title{text-align:center;line-height:1.2}
+    .title-line1{font-family:Poppins,sans-serif;font-size:26px;font-weight:800;color:#1e3a5f}
+    .title-line2{font-family:Poppins,sans-serif;font-size:18px;font-weight:400;color:#2563eb}
+    .title-line3{font-family:Poppins,sans-serif;font-size:14px;font-weight:400;color:#64748b}
+    .info-bar{display:grid;grid-template-columns:1fr 1.6fr 1fr;align-items:center;text-align:center;gap:12px;background:#fff;border-bottom:1px solid var(--line);padding:12px 14px;font-size:13px;font-weight:700;color:var(--navy)}
+    .info-bar>:first-child{text-align:left}.info-bar>:last-child{text-align:right}
+    .main-shell{max-width:1020px;margin:auto;padding:22px 16px 45px}
+    .phase{background:#dbeafe;border-left:5px solid var(--blue);padding:13px 17px;font-weight:800;color:var(--navy);border-radius:8px;margin-bottom:14px}
+    .card{background:white;border:1px solid var(--line);border-radius:16px;box-shadow:0 8px 30px #15304a0c;padding:20px;margin-bottom:15px}
+    .instruction{background:var(--navy);color:white;padding:16px 20px;border-radius:10px;font-weight:800;letter-spacing:.025em;margin-bottom:17px}
+    .task-text{font-size:19px;line-height:1.55;font-weight:600;margin-bottom:20px;white-space:pre-wrap}
+    .answer-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+    .choice,.chip,.order-item{border:2px solid var(--line);border-radius:10px;background:#f8fbff;color:#213349;padding:12px;text-align:left;font:inherit;overflow-wrap:anywhere}
+    .choice:hover:not(:disabled),.chip:hover,.order-item:hover{border-color:#60a5fa}
+    .choice.selected,.tile.selected{background:#dbeafe;border-color:var(--blue)}
+    .correct{background:#dcfce7!important;border-color:var(--green)!important;color:#14532d!important}
+    .incorrect{background:#fee2e2!important;border-color:var(--red)!important;color:#7f1d1d!important}
+    .neutral{background:#e5e7eb!important;border-color:#cbd5e1!important}
+    .feedback{margin-top:16px;padding:13px;border-radius:9px;background:#eff6ff;line-height:1.5}
+    .primary,.secondary{border:0;border-radius:9px;padding:11px 18px;font:600 14px Poppins,sans-serif}
+    .primary{background:var(--blue);color:white}.secondary{background:#e8eff7;color:var(--navy)}
+    .nav-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:18px 0 10px}
+    .stats{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 14px;border-top:1px solid var(--line);padding-top:14px;font-size:13px;font-weight:600}
+    .audio-panel{padding:15px;text-align:center}
+    .avatars{display:flex;justify-content:center;gap:35px;margin-bottom:10px}
+    .avatar span{display:grid;place-items:center;border-radius:50%;background:#eaf4ff;width:48px;height:48px;font-size:29px}
+    .avatar small{display:block;margin-top:4px}
+    .controls{display:flex;justify-content:center;gap:12px}
+    .controls button{min-width:72px}
+    .progress{height:5px;border-radius:20px;background:#dce8f5;margin:15px 0 5px;overflow:hidden}
+    .progress-fill{width:0;height:100%;background:var(--blue)}
+    .audio-error{color:var(--red);font-size:13px;margin-top:10px}
+    .matching-layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(175px,1fr);gap:15px}
+    .match-rows,.chip-tray,.order-list{display:flex;flex-direction:column;gap:9px;min-width:0}
+    .match-row{border:1px solid var(--line);border-radius:10px;padding:11px;min-width:0;overflow-wrap:anywhere}
+    .drop-slot{min-height:52px;border:2px dashed #9db6d1;border-radius:8px;margin-top:9px;padding:5px}
+    .chip{touch-action:none;user-select:none;cursor:grab;width:100%;font-size:14px}
+    .chip.dragging,.order-item.dragging{z-index:10;position:relative;pointer-events:none;opacity:.85;box-shadow:0 10px 25px #152b4950}
+    .chip-tray{border:1px dashed #9db6d1;border-radius:10px;padding:9px;min-height:72px}
+    .order-item{display:flex;align-items:center;gap:8px;touch-action:none;user-select:none}
+    .order-label{flex:1;min-width:0}
+    .move-buttons{display:flex;gap:4px}
+    .move-buttons button{touch-action:manipulation;border:0;background:#e1ecfa;border-radius:5px;padding:5px 9px}
+    .badge{width:166px;height:166px;border-radius:50%;border:11px solid #bfdbfe;display:grid;place-content:center;margin:18px auto;background:#eff6ff;color:var(--navy);text-align:center;font-size:26px;font-weight:800}
+    .summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+    .summary-grid div{background:#f1f6fc;padding:13px;border-radius:9px}
+    .breakdown-row,.review-row{border-bottom:1px solid var(--line);padding:10px 0}
+    details{border:1px solid var(--line);border-radius:10px;padding:12px;margin:15px 0}
+    summary{cursor:pointer;font-weight:700}
+    .transcript-line{margin:10px 0;line-height:1.5}
+    .result-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+    .confetti-piece{position:fixed;top:-20px;width:9px;height:14px;pointer-events:none;animation:fall 3s linear forwards;z-index:50}
+    @keyframes fall{to{transform:translateY(calc(110 * min(var(--vh, 1vh), 1vh))) rotate(720deg);opacity:0}}
+    @media(max-width:640px){
+      .main-shell{padding:12px 10px 30px}.card{padding:14px}
+      .answer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .matching-layout{grid-template-columns:1fr}
+      .chip-tray{flex-direction:row;flex-wrap:wrap}.chip-tray .chip{width:auto;max-width:100%}
+      .summary-grid{grid-template-columns:repeat(2,1fr)}
+      .stats{justify-content:center;font-size:11px}
+      .task-text{font-size:16px}
+      .choice{font-size:13px;padding:9px}
+    }
+    @media print{
+      .quiz-header,.info-bar,.result-actions,.audio-panel,.nav-row{display:none!important}
+      body{background:white!important}.card{box-shadow:none;border:0}
+      .print-transcript{display:block!important}details{display:block}details>*{display:block!important}
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  
+  
+  
+ <script>(function(){var ok=true;try{window.localStorage.getItem("__t")}catch(e){ok=false}
+if(!ok){var m={};try{Object.defineProperty(window,"localStorage",{configurable:true,value:{
+getItem:function(k){return Object.prototype.hasOwnProperty.call(m,k)?m[k]:null},
+setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}}}})}catch(e2){}}})();</script></head>
+ <body class="w-full">
+  <header class="quiz-header"><img class="header-teacher-img" loading="lazy" src="teacher.png" alt="Teacher Soufiane">
+   <div class="header-title">
+    <div class="title-line1">
+     English2BAC Quizzes
+    </div>
+    <div class="title-line2">
+     Learn • Practice • Succeed
+    </div>
+    <div class="title-line3">
+     with Teacher.Soufiane
+    </div>
+   </div><img class="header-logo-img" loading="lazy" src="logo.png" alt="Level-UP 2BAC">
+  </header>
+  <div class="info-bar" aria-label="Quiz information"><span class="">UNIT: 4</span> <span class="">EXPRESSING CAUSE AND EFFECT</span> <span class="">LISTENING - QUIZ 1</span>
+  </div>
+  <main class="main-shell">
+   <section id="quiz-view">
+    <div id="phase-banner" class="phase" aria-live="polite"></div>
+    <section id="audio-panel" class="card audio-panel" hidden="" aria-label="Conversation audio player">
+     <div class="avatars">
+      <div class="avatar">
+       <span aria-hidden="true">👨</span><small>Adam</small>
+      </div>
+      <div class="avatar">
+       <span aria-hidden="true">👩</span><small>Malak</small>
+      </div>
+     </div>
+     <div class="controls" id="audio-controls" tabindex="0" aria-label="Audio controls: Space plays or pauses; left and right arrows skip ten seconds"><button id="back-ten" class="secondary" type="button" aria-label="Skip back 10 seconds">◀◀ 10</button> <button id="play-pause" class="primary" type="button" aria-label="Play or pause">▶</button> <button id="forward-ten" class="secondary" type="button" aria-label="Skip forward 10 seconds">10 ▶▶</button>
+     </div>
+     <div class="progress" role="progressbar" aria-label="Audio progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progress-fill" id="progress-fill"></div>
+     </div>
+     <div id="audio-error" class="audio-error" hidden="">
+      Audio couldn't be loaded — ask your teacher for the printed transcript.
+     </div>
+    </section>
+    <section class="card" aria-label="Current question">
+     <div id="instruction" class="instruction"></div>
+     <div id="task-text" class="task-text"></div>
+     <div id="answer-area"></div>
+     <div id="feedback" class="feedback" hidden="" role="status"></div>
+     <div class="nav-row"><button id="previous" class="secondary" type="button">◀ Previous</button> <strong id="counter"></strong> <button id="next" class="primary" type="button">Next ▶</button>
+     </div>
+     <div class="stats" aria-live="polite"><span id="correct-stat"></span><span id="wrong-stat"></span><span id="remaining-stat"></span><span id="score-stat"></span><span id="timer-stat"></span>
+     </div>
+    </section>
+   </section>
+   <section id="result-view" class="card" hidden=""></section>
+   <section id="review-view" class="card" hidden=""></section>
+  </main>
+  <script>
+  'use strict';
+  // Configuration and question content are logic data, not editor presentation.
+  const quizConfig={
+    unit:"4",title:"EXPRESSING CAUSE AND EFFECT",lesson:"LISTENING - QUIZ 1",
+    totalPoints:48,randomizeQuestions:false,randomizeChoices:true,
+    audioFileUrl:"https://raw.githubusercontent.com/Teacher-Soufiane/unit4-listening/main/Unit4_Expressing_Cause_and_Effect_Quiz1_Final.mp3",
+    audioTranscript:[
+      ["Adam","Hey Malak, have you noticed how much plastic rubbish there is in our schoolyard lately?"],
+      ["Malak","Yes, especially after the break. Students leave bottles and food wrappers everywhere because there aren't enough people putting rubbish in the bins."],
+      ["Adam","I think that's part of the problem. Some students also throw rubbish on the ground even when a bin is nearby."],
+      ["Malak","Exactly. As a result, the schoolyard looks dirty, and nobody really wants to sit there during the break."],
+      ["Adam","It's not just about appearance, though. Plastic waste can also harm animals if they swallow it."],
+      ["Malak","That's true. I read that some birds and stray animals mistake small pieces of plastic for food, so they can become seriously ill."],
+      ["Adam","And when it rains heavily, plastic bags can block drainage systems."],
+      ["Malak","Really? So that can cause flooding in the streets?"],
+      ["Adam","Yes, especially in areas where rubbish collects near drains. Consequently, water can't flow away properly."],
+      ["Malak","Now I understand why the streets near our school sometimes become flooded after heavy rain."],
+      ["Adam","Exactly. Due to careless waste disposal, a small problem can become much more serious."],
+      ["Malak","But why do people use so many plastic bottles and bags in the first place?"],
+      ["Adam","They're cheap and convenient, so people often choose them instead of reusable alternatives."],
+      ["Malak","I see. And because many of these products are used only once, they create a lot of waste."],
+      ["Adam","That's right. Some plastic takes a very long time to break down, therefore it can remain in the environment for years."],
+      ["Malak","That's worrying. What can we do to reduce the amount of plastic rubbish at school?"],
+      ["Adam","We could encourage students to bring reusable water bottles instead of buying new plastic ones every day."],
+      ["Malak","Good idea. If more students do that, we'll produce less plastic waste."],
+      ["Adam","We could also put clearly labelled recycling bins around the school."],
+      ["Malak","Yes, because students are more likely to recycle when they know exactly where to put their rubbish."],
+      ["Adam","We should also organise a clean-up campaign to make students more aware of the consequences of littering."],
+      ["Malak","I agree. As a result, students might become more responsible for keeping their school clean."],
+      ["Adam","We could prepare posters explaining how plastic pollution affects animals and the environment, too."],
+      ["Malak","That's a great idea. People sometimes change their behaviour when they understand the consequences of their actions."],
+      ["Adam","Exactly. We shouldn't just complain about the problem; we should do something about it."],
+      ["Malak","So, let's talk to our English teacher and suggest a school campaign."],
+      ["Adam","Perfect. I'll prepare a few ideas for the posters, and you can suggest activities for the campaign."],
+      ["Malak","Deal! Hopefully, our efforts will make a difference because a cleaner school benefits everyone."]
+    ]
+  };
+  const single=(label,question,task,choices,correct,explanation)=>({type:"single-choice",taskLabel:label,question,task,choices,correctAnswer:correct,explanation,points:1});
+  const match=(label,question,task,rows,chips,explanation)=>({type:"matching",taskLabel:label,question,task,rows:rows.map((text,i)=>({id:"r"+(i+1),text})),chips:chips.map((text,i)=>({id:"c"+(i+1),text,matchesRowId:"r"+(i+1)})),explanation,points:rows.length});
+  const questions=[
+    single("Task 1 — Complete the Sentence","COMPLETE THE SENTENCE.","The schoolyard is dirty ______ students leave bottles everywhere.",["because","as a result","therefore","consequently"],"because","'Because' introduces the cause (students leave bottles everywhere) of the result in the first clause."),
+    single("Task 1 — Complete the Sentence","COMPLETE THE SENTENCE.","The streets flooded ______ the heavy rain.",["so","because of","as a result","therefore"],"because of","'Because of' is followed by a noun phrase (the heavy rain) and introduces a cause."),
+    single("Task 1 — Complete the Sentence","COMPLETE THE SENTENCE.","Plastic takes years to break down. ______, it stays in the environment.",["Because","Due to","Therefore","Because of"],"Therefore","'Therefore' introduces a result and starts a new sentence after a comma."),
+    single("Task 1 — Complete the Sentence","COMPLETE THE SENTENCE.","He forgot his reusable bottle, ______ he bought a new plastic one.",["because","due to","because of","so"],"so","'So' links a cause (he forgot his bottle) to its result (he bought a new one)."),
+    match("Task 2 — Match the Word with its Meaning","MATCH THE WORD WITH ITS MEANING.","Drag each word to the meaning it matches.",["Things that people throw away","A pipe or channel that carries water away","Too much water covering land that is usually dry","Able to be used many times","Easy to use and saving time"],["rubbish","drain","flooding","reusable","convenient"],"These five words appear in the conversation: rubbish, drain, flooding, reusable and convenient."),
+    {type:"multi-select-exact",taskLabel:"Task 3 — Predict the Listening",question:"PREDICT THE LISTENING.",task:"You are going to hear two students talking about a problem at their school. Which topics are you most likely to hear? Select THREE.",options:["Plastic rubbish in the schoolyard","A basketball tournament","The effects of plastic on animals","A new cafeteria menu","Flooding in the streets","A school trip to Marrakesh"],correctOptions:["Plastic rubbish in the schoolyard","The effects of plastic on animals","Flooding in the streets"],explanation:"The students discuss plastic rubbish in the schoolyard, its effects on animals, and flooding in the streets. A basketball tournament, a new cafeteria menu and a school trip are unrelated.",points:3},
+    single("Task 4 — Choose the Best Summary","CHOOSE THE BEST SUMMARY.","What is the conversation mainly about?",["Two students argue about who should clean the schoolyard every day.","Two students discuss the causes and effects of plastic pollution at school.","Two students plan a weekend trip to a beach near their city.","Two students compare the prices of reusable bottles in shops."],"Two students discuss the causes and effects of plastic pollution at school.","Adam and Malak talk about why plastic rubbish is a problem at their school, what it causes, and how to reduce it."),
+    single("Task 5 — Identify the Final Decision","IDENTIFY THE FINAL DECISION.","What do Adam and Malak decide to do at the end of the conversation?",["Write a letter to the mayor about blocked drains","Buy new rubbish bins for the neighbouring streets","Talk to their English teacher about a school campaign","Stop using plastic bottles for one whole month"],"Talk to their English teacher about a school campaign","Malak says: 'let's talk to our English teacher and suggest a school campaign.'"),
+    match("Task 6 — Match the Cause with its Effect","MATCH THE CAUSE WITH ITS EFFECT.","Drag each effect to the cause it belongs to.",["Birds and stray animals swallow small pieces of plastic.","Plastic bags block the drainage systems.","Rubbish is left on the ground in the schoolyard.","Plastic takes a very long time to break down."],["They can become seriously ill.","Water can't flow away and the streets flood.","The schoolyard looks dirty.","It stays in the environment for years."],"Each cause mentioned in the conversation leads to a specific effect: animals become ill, streets flood, the schoolyard looks dirty, and plastic remains for years."),
+    single("Task 7 — Understand the Reason","UNDERSTAND THE REASON.","Why do people use so many plastic bottles and bags?",["They are healthier than any reusable alternative.","They are given free in most local shops.","They are required by the school regulations.","They are cheap and convenient to use."],"They are cheap and convenient to use.","Adam says: 'They're cheap and convenient, so people often choose them instead of reusable alternatives.'"),
+    single("Task 8 — Understand the Cause","UNDERSTAND THE CAUSE.","Why do many plastic products create a lot of waste?",["Because they are used only once","Because they are made in large factories","Because they are sold in very big sizes","Because people buy them mostly in summer"],"Because they are used only once","Malak says: 'because many of these products are used only once, they create a lot of waste.'"),
+    single("Task 9 — Listen for a Detail","LISTEN FOR A DETAIL.","Which animals does Malak say can be harmed by plastic?",["Fish and sea turtles","Cows and sheep on farms","Birds and stray animals","Pets kept inside houses"],"Birds and stray animals","Malak says some birds and stray animals mistake small pieces of plastic for food."),
+    single("Task 10 — Understand the Solution","UNDERSTAND THE SOLUTION.","What does Adam suggest to reduce plastic bottles at school?",["Selling cheaper bottles in the cafeteria","Bringing reusable water bottles to school","Banning all food inside the classrooms","Collecting old bottles from nearby streets"],"Bringing reusable water bottles to school","Adam suggests encouraging students to bring reusable water bottles instead of buying new plastic ones every day."),
+    single("Task 11 — True or False","CHOOSE TRUE OR FALSE.","Some students throw rubbish on the ground even when a bin is nearby.",["True","False"],"True","Adam says some students throw rubbish on the ground even when a bin is nearby."),
+    single("Task 11 — True or False","CHOOSE TRUE OR FALSE.","Animals can become ill because they mistake plastic for food.",["True","False"],"True","Malak says animals can become seriously ill because they mistake small pieces of plastic for food."),
+    single("Task 11 — True or False","CHOOSE TRUE OR FALSE.","Adam says plastic breaks down very quickly in the environment.",["True","False"],"False","Adam says some plastic takes a very long time to break down and can remain in the environment for years."),
+    single("Task 11 — True or False","CHOOSE TRUE OR FALSE.","Adam and Malak decide only to complain about the problem.",["True","False"],"False","Adam says they shouldn't just complain; they should do something, so they plan a school campaign."),
+    single("Task 12 — Identify the Expression","IDENTIFY THE EXPRESSION.","\"Students leave bottles and food wrappers everywhere because there aren't enough people putting rubbish in the bins.\" Which expression of cause or effect is used?",["as a result","because","consequently","therefore"],"because","The sentence uses 'because' to introduce the cause."),
+    single("Task 12 — Identify the Expression","IDENTIFY THE EXPRESSION.","\"As a result, the schoolyard looks dirty, and nobody really wants to sit there during the break.\" Which expression of cause or effect is used?",["because","due to","as a result","so"],"as a result","The sentence begins with 'As a result' to introduce the effect."),
+    single("Task 12 — Identify the Expression","IDENTIFY THE EXPRESSION.","\"Consequently, water can't flow away properly.\" Which expression of cause or effect is used?",["because","therefore","due to","consequently"],"consequently","The sentence begins with 'Consequently' to introduce the effect."),
+    single("Task 12 — Identify the Expression","IDENTIFY THE EXPRESSION.","\"Due to careless waste disposal, a small problem can become much more serious.\" Which expression of cause or effect is used?",["due to","as a result","consequently","therefore"],"due to","The sentence uses 'Due to' followed by a noun phrase to introduce the cause."),
+    single("Task 13 — Identify the Effect","IDENTIFY THE EFFECT.","\"Plastic bags can block drainage systems. Consequently, water can't flow away properly.\" What is the effect?",["Plastic bags block the drains.","Water can't flow away properly.","It rains heavily in the area.","People throw rubbish near drains."],"Water can't flow away properly.","'Consequently' introduces the effect: water can't flow away properly."),
+    single("Task 14 — Identify the Cause","IDENTIFY THE CAUSE.","\"Because many of these products are used only once, they create a lot of waste.\" Which part gives the cause?",["They create a lot of waste.","Plastic is very easy to recycle.","Many products are used only once.","Plastic is cheap and convenient."],"Many products are used only once.","The clause after 'Because' gives the cause; 'they create a lot of waste' is the effect."),
+    single("Task 15 — Choose the Correct Expression","CHOOSE THE CORRECT EXPRESSION.","The bins were full. ______, rubbish was left on the ground.",["Because","Due to","As a result","Because of"],"As a result","'As a result' introduces the effect in a new sentence."),
+    single("Task 15 — Choose the Correct Expression","CHOOSE THE CORRECT EXPRESSION.","The match was cancelled ______ the heavy rain.",["because","because of","therefore","as a result"],"because of","'Because of' is followed by a noun phrase (the heavy rain)."),
+    single("Task 15 — Choose the Correct Expression","CHOOSE THE CORRECT EXPRESSION.","Many students bring reusable bottles ______ they want to produce less waste.",["because","because of","due to","consequently"],"because","'Because' is followed by a full clause (they want to produce less waste)."),
+    single("Task 15 — Choose the Correct Expression","CHOOSE THE CORRECT EXPRESSION.","There was a lot of litter, ______ the students organised a clean-up campaign.",["due to","because","because of","so"],"so","'So' introduces the result after a comma."),
+    single("Task 16 — Choose the Correct Sentence","CHOOSE THE CORRECT SENTENCE.","Which sentence is grammatically correct?",["Because the heavy rain, the streets were flooded.","Due to it rained heavily, the streets were flooded.","Due to the heavy rain, the streets were flooded.","As a result the heavy rain, the streets were flooded."],"Due to the heavy rain, the streets were flooded.","'Due to' must be followed by a noun phrase (the heavy rain)."),
+    single("Task 17 — Choose the Sentence with the Same Meaning","CHOOSE THE SENTENCE WITH THE SAME MEANING.","\"Plastic bags blocked the drains. As a result, the street flooded.\"",["The street flooded so plastic bags blocked the drains.","The street flooded because plastic bags blocked the drains.","Plastic bags blocked the drains because the street flooded.","The street flooded although plastic bags blocked the drains."],"The street flooded because plastic bags blocked the drains.","Blocked drains are the cause and flooding is the effect, so 'because' links them correctly."),
+    {type:"ordering",taskLabel:"Task 18 — Put the Ideas in Order",question:"PUT THE IDEAS IN ORDER.",task:"Put the ideas in the order in which they are discussed in the conversation.",items:["The schoolyard looks dirty","Animals swallow plastic and become ill","Blocked drains cause flooding","Single-use plastic creates a lot of waste","Reusable bottles can reduce plastic waste"].map((text,i)=>({id:"i"+(i+1),text,correctPosition:i+1})),explanation:"The students first talk about the dirty schoolyard, then harm to animals, then blocked drains and flooding, then why single-use plastic creates waste, and finally reusable bottles as a solution.",points:5},
+    match("Task 19 — Match the Problem with the Solution","MATCH THE PROBLEM WITH THE SOLUTION.","Drag each solution to the problem it solves.",["Students buy new plastic bottles every day.","Students don't know where to put their rubbish.","Students aren't aware of the consequences of littering.","People don't understand how plastic harms animals."],["Bring reusable water bottles instead","Put clearly labelled recycling bins around school","Organise a clean-up campaign at school","Prepare posters explaining the effects on animals"],"Each problem has a matching solution suggested in the conversation: reusable bottles, labelled bins, a clean-up campaign, and posters."),
+    single("Task 20 — Overall Listening Check","OVERALL LISTENING CHECK.","Why does Malak hope their efforts will make a difference?",["Because the teacher will give them extra marks","Because plastic will disappear within a few weeks","Because a cleaner school benefits everyone","Because the town will install new street bins"],"Because a cleaner school benefits everyone","Malak ends by saying: 'Hopefully, our efforts will make a difference because a cleaner school benefits everyone.'")
+  ];
+  const $=id=>document.getElementById(id);
+  const node=(tag,text,className)=>{const el=document.createElement(tag);if(text!==null)el.textContent=text;if(className)el.className=className;return el};
+  const shuffleDifferent=(items,identity)=>{let copy=items.slice();for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}if(identity&&copy.every((x,i)=>x.id===identity[i].id))[copy[0],copy[1]]=[copy[1],copy[0]];return copy};
+  let index=0,states=[],view="quiz",reviewIndex=0,completed=false;
+  const freshStates=()=>questions.map(()=>({locked:false,earned:0,selected:null,selectedSet:new Set(),slots:{},order:null,shuffledChoices:null,shuffledOptions:null,shuffledChips:null,selectionTimer:null}));
+  states=freshStates();
+  // The count-up timer is independent of question rendering.
+  const timer={
+    seconds:0,interval:null,
+    start(){if(this.interval)return;this.interval=setInterval(()=>{this.seconds++;$("timer-stat").textContent="Timer: "+this.format()},1000)},
+    pause(){clearInterval(this.interval);this.interval=null},
+    reset(){this.pause();this.seconds=0},
+    format(){return `${String(Math.floor(this.seconds/60)).padStart(2,"0")}:${String(this.seconds%60).padStart(2,"0")}`}
+  };
+  // Web Audio persists across listening phases. A single fetch/decode begins at Q7.
+  // Canva's iframe blocks external <audio> playback, so decoded audio is played through Web Audio.
+  const audioPlayer={
+    context:null,buffer:null,source:null,loaded:false,loading:false,failed:false,playing:false,offset:0,startedAt:0,raf:null,
+    prepare(){
+      if(this.loading||this.loaded||this.failed)return;
+      this.loading=true;
+      fetch(quizConfig.audioFileUrl).then(r=>{if(!r.ok)throw Error("Audio download failed");return r.arrayBuffer()})
+        .then(bytes=>{this.context=this.context||new (window.AudioContext||window.webkitAudioContext)();return this.context.decodeAudioData(bytes)})
+        .then(buffer=>{this.buffer=buffer;this.loaded=true;this.loading=false})
+        .catch(error=>{console.error(error);this.failed=true;this.loading=false;this.showError()});
+    },
+    showError(){
+      $("audio-error").hidden=false;
+      ["back-ten","play-pause","forward-ten"].forEach(id=>$(id).disabled=true);
+    },
+    time(){return this.playing?Math.min(this.buffer.duration,this.offset+this.context.currentTime-this.startedAt):this.offset},
+    update(){
+      const percent=this.buffer?Math.min(100,this.time()/this.buffer.duration*100):0;
+      $("progress-fill").style.width=percent+"%";
+      document.querySelector(".progress").setAttribute("aria-valuenow",String(Math.round(percent)));
+      if(this.playing)this.raf=requestAnimationFrame(()=>this.update());
+    },
+    startSource(){
+      if(!this.buffer)return;
+      const source=this.context.createBufferSource();
+      source.buffer=this.buffer;source.connect(this.context.destination);
+      if(this.offset>=this.buffer.duration)this.offset=0;
+      this.startedAt=this.context.currentTime;
+      this.source=source;
+      source.onended=()=>{if(this.source!==source)return;this.source=null;this.playing=false;this.offset=this.buffer.duration;$("play-pause").textContent="▶";cancelAnimationFrame(this.raf);this.update()};
+      source.start(0,this.offset);
+      this.playing=true;$("play-pause").textContent="⏸";this.update();
+    },
+    play(){
+      if(this.failed)return;
+      if(!this.loaded){this.prepare();return}
+      // resume() and source.start() run directly inside the student's click handler.
+      try{
+        const resumed=this.context.resume();
+        this.startSource();
+        resumed.catch(error=>{console.error(error);this.pause()});
+      }catch(error){console.error(error);this.pause()}
+    },
+    pause(){
+      if(!this.playing)return;
+      this.offset=this.time();
+      const source=this.source;this.source=null;this.playing=false;
+      if(source)source.stop();
+      cancelAnimationFrame(this.raf);$("play-pause").textContent="▶";this.update();
+    },
+    toggle(){if(this.playing)this.pause();else this.play()},
+    seek(time){
+      if(!this.buffer)return;
+      const wasPlaying=this.playing;
+      if(wasPlaying)this.pause();
+      this.offset=Math.min(this.buffer.duration,Math.max(0,time));
+      this.update();
+      if(wasPlaying)this.play();
+    },
+    reset(){this.pause();this.offset=0;this.update()}
+  };
+  // Phase updates share the Q7 trigger with the single audio preparation.
+  function updatePhase(){
+    const phase=index<6?"PRE-LISTENING":index<8?"WHILE-LISTENING — First Listening: General Understanding":index<17?"WHILE-LISTENING — Second Listening: Specific Information":index<23?"WHILE-LISTENING — Third Listening: Understanding the Function":"POST-LISTENING";
+    $("phase-banner").textContent=phase;
+    $("audio-panel").hidden=index<6;
+    if(index>=6)audioPlayer.prepare();
+  }
+  const effects=(()=>{
+    let context;
+    return (kind)=>{
+      if(audioPlayer.playing)return;
+      try{
+        context=context||new (window.AudioContext||window.webkitAudioContext)();
+        const oscillator=context.createOscillator(),gain=context.createGain(),now=context.currentTime;
+        oscillator.type="sine";
+        oscillator.frequency.setValueAtTime(kind==="wrong"?240:kind==="click"?440:kind==="finish"?600:520,now);
+        if(kind==="correct"||kind==="finish")oscillator.frequency.exponentialRampToValueAtTime(kind==="finish"?950:720,now+.13);
+        gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.045,now+.01);gain.gain.exponentialRampToValueAtTime(.0001,now+.18);
+        oscillator.connect(gain);gain.connect(context.destination);oscillator.start(now);oscillator.stop(now+.2);
+      }catch(_){}
+    }
+  })();
+  function score(){return states.reduce((sum,s)=>sum+s.earned,0)}
+  function stats(){
+    const done=states.filter(s=>s.locked),correct=done.filter((s,i)=>s.earned===questions[states.indexOf(s)].points).length;
+    $("correct-stat").textContent="✅ Correct: "+correct;
+    $("wrong-stat").textContent="❌ Wrong: "+(done.length-correct);
+    $("remaining-stat").textContent="Remaining: "+(questions.length-done.length);
+    $("score-stat").textContent="Score: "+score().toFixed(2)+" /48";
+    $("timer-stat").textContent="Timer: "+timer.format();
+  }
+  function lock(earned,answer){
+    const s=states[index],q=questions[index];
+    if(s.locked)return;
+    s.locked=true;s.earned=earned;s.answer=answer;
+    effects(earned===q.points?"correct":"wrong");
+    $("feedback").hidden=false;
+    $("feedback").textContent=(earned===q.points?["Great work!","Well done!","Excellent!"][Math.floor(Math.random()*3)]:"Keep practising!")+" "+q.explanation;
+    $("next").disabled=false;
+    stats();
+  }
+  function renderSingle(q,s,area){
+    if(!s.shuffledChoices)s.shuffledChoices=shuffleDifferent(q.choices);
+    const grid=node("div",null,"answer-grid");area.append(grid);
+    s.shuffledChoices.forEach(choice=>{
+      const button=node("button",choice,"choice");button.type="button";button.disabled=s.locked;
+      if(s.locked){if(choice===q.correctAnswer)button.classList.add("correct");else if(choice===s.answer)button.classList.add("incorrect")}
+      button.addEventListener("click",()=>{
+        if(s.locked)return;
+        lock(choice===q.correctAnswer?1:0,choice);
+        grid.querySelectorAll("button").forEach(b=>{b.disabled=true;if(b.textContent===q.correctAnswer)b.classList.add("correct");else if(b===button)b.classList.add("incorrect")});
+      });
+      grid.append(button);
+    });
+  }
+  // TYPE C: Pointer Events move chips freely between slots; only Check Answers grades.
+  function renderMatching(q,s,area){
+    if(!s.shuffledChips)s.shuffledChips=shuffleDifferent(q.chips,q.chips);
+    const layout=node("div",null,"matching-layout"),rows=node("div",null,"match-rows"),tray=node("div",null,"chip-tray");
+    tray.setAttribute("aria-label","Draggable answer chips");
+    const chipElements=new Map(),slots=new Map();
+    q.rows.forEach(row=>{
+      const box=node("div",null,"match-row"),label=node("div",row.text),slot=node("div",null,"drop-slot");
+      slot.dataset.rowId=row.id;slots.set(row.id,slot);box.append(label,slot);rows.append(box);
+    });
+    s.shuffledChips.forEach(chip=>{
+      const button=node("button",chip.text,"chip");button.type="button";button.dataset.chipId=chip.id;
+      button.setAttribute("aria-label",chip.text+"; drag to a row");
+      chipElements.set(chip.id,button);tray.append(button);
+      if(!s.locked)pointerDrag(button,(x,y)=>{
+        const target=document.elementFromPoint(x,y)?.closest(".drop-slot");
+        if(!target||!layout.contains(target))return;
+        const destination=target.dataset.rowId;
+        const occupied=s.slots[destination];
+        const old=Object.keys(s.slots).find(id=>s.slots[id]===chip.id);
+        if(old)delete s.slots[old];
+        if(occupied&&occupied!==chip.id)delete s.slots[destination];
+        s.slots[destination]=chip.id;
+        place();
+        effects("click");
+      });
+    });
+    function place(){
+      s.shuffledChips.forEach(chip=>{
+        const row=Object.keys(s.slots).find(id=>s.slots[id]===chip.id);
+        (row?slots.get(row):tray).append(chipElements.get(chip.id));
+      });
+      check.disabled=Object.keys(s.slots).length!==q.rows.length||s.locked;
+    }
+    layout.append(rows,tray);area.append(layout);
+    const check=node("button","Check Answers","primary");check.type="button";check.style.marginTop="16px";area.append(check);
+    check.addEventListener("click",()=>{
+      if(s.locked||Object.keys(s.slots).length!==q.rows.length)return;
+      const answer={...s.slots};
+      const earned=q.rows.filter(row=>q.chips.find(c=>c.id===answer[row.id])?.matchesRowId===row.id).length;
+      lock(earned,answer);check.disabled=true;
+      q.rows.forEach(row=>{
+        const slot=slots.get(row.id),right=q.chips.find(c=>c.matchesRowId===row.id);
+        const ok=answer[row.id]===right.id;
+        slot.classList.add(ok?"correct":"incorrect");
+        if(!ok)slot.append(node("div","Correct: "+right.text));
+      });
+      chipElements.forEach(button=>button.disabled=true);
+    });
+    place();
+    if(s.locked){
+      q.rows.forEach(row=>{
+        const right=q.chips.find(c=>c.matchesRowId===row.id),slot=slots.get(row.id);
+        const ok=s.answer[row.id]===right.id;
+        slot.classList.add(ok?"correct":"incorrect");
+        if(!ok)slot.append(node("div","Correct: "+right.text));
+      });
+    }
+  }
+  // TYPE D: a single Set is read on each click. Three selections start a short evaluation window.
+  function renderMulti(q,s,area){
+    if(!s.shuffledOptions)s.shuffledOptions=shuffleDifferent(q.options);
+    const grid=node("div",null,"answer-grid");area.append(grid);
+    function paint(){
+      [...grid.children].forEach(button=>{
+        const value=button.dataset.value;
+        button.className="choice tile";
+        if(s.locked){
+          button.disabled=true;
+          if(q.correctOptions.includes(value))button.classList.add("correct");
+          else if(s.selectedSet.has(value))button.classList.add("incorrect");
+          else button.classList.add("neutral");
+        }else if(s.selectedSet.has(value))button.classList.add("selected");
+      });
+    }
+    s.shuffledOptions.forEach(option=>{
+      const button=node("button",option,"choice tile");button.type="button";button.dataset.value=option;
+      button.addEventListener("click",()=>{
+        if(s.locked)return;
+        clearTimeout(s.selectionTimer);
+        if(s.selectedSet.has(option))s.selectedSet.delete(option);
+        else if(s.selectedSet.size<3)s.selectedSet.add(option);
+        effects("click");paint();
+        if(s.selectedSet.size===3){
+          s.selectionTimer=setTimeout(()=>{
+            if(s.locked||s.selectedSet.size!==3)return;
+            const exact=q.correctOptions.every(value=>s.selectedSet.has(value));
+            lock(exact?3:0,[...s.selectedSet]);paint();
+          },500);
+        }
+      });
+      grid.append(button);
+    });
+    paint();
+  }
+  // TYPE E: drag and ▲/▼ mutate the same order; Check Answers grades each position once.
+  function renderOrdering(q,s,area){
+    if(!s.order)s.order=shuffleDifferent(q.items,q.items).map(item=>item.id);
+    const list=node("div",null,"order-list");area.append(list);
+    function draw(){
+      list.replaceChildren();
+      s.order.forEach((id,position)=>{
+        const item=q.items.find(x=>x.id===id),row=node("div",null,"order-item");
+        row.dataset.itemId=id;
+        row.append(node("span",item.text,"order-label"));
+        if(s.locked)row.classList.add(item.correctPosition===position+1?"correct":"incorrect");
+        else{
+          const controls=node("div",null,"move-buttons");
+          [["▲",-1],["▼",1]].forEach(([symbol,direction])=>{
+            const button=node("button",symbol);button.type="button";
+            button.setAttribute("aria-label",direction<0?"Move up":"Move down");
+            button.disabled=position+direction<0||position+direction>=s.order.length;
+            button.addEventListener("click",event=>{event.stopPropagation();move(position,position+direction)});
+            controls.append(button);
+          });
+          row.append(controls);
+          pointerDrag(row,(x,y)=>{
+            const target=document.elementFromPoint(x,y)?.closest(".order-item");
+            if(!target||!list.contains(target))return;
+            move(s.order.indexOf(id),s.order.indexOf(target.dataset.itemId));
+          },event=>event.target.closest(".move-buttons"));
+        }
+        list.append(row);
+      });
+    }
+    function move(from,to){if(from===to||to<0||to>=s.order.length)return;const [id]=s.order.splice(from,1);s.order.splice(to,0,id);effects("click");draw()}
+    draw();
+    const check=node("button","Check Answers","primary");check.type="button";check.style.marginTop="16px";area.append(check);
+    check.disabled=s.locked;
+    check.addEventListener("click",()=>{
+      if(s.locked)return;
+      const earned=s.order.filter((id,i)=>q.items.find(item=>item.id===id).correctPosition===i+1).length;
+      lock(earned,[...s.order]);check.disabled=true;draw();
+      area.append(node("p","Correct order: "+q.items.map(item=>item.text).join(" → "),"feedback"));
+    });
+    if(s.locked)area.append(node("p","Correct order: "+q.items.map(item=>item.text).join(" → "),"feedback"));
+  }
+  // Pointer capture keeps mouse and touch dragging consistent. A movement threshold
+  // leaves ordering arrow buttons clickable without initiating a drag.
+  function pointerDrag(element,onDrop,ignore=()=>false){
+    element.addEventListener("pointerdown",event=>{
+      if(event.button!==0||ignore(event))return;
+      const startX=event.clientX,startY=event.clientY,id=event.pointerId;
+      let active=false,lastX=startX,lastY=startY;
+      element.setPointerCapture(id);
+      function move(e){
+        if(e.pointerId!==id)return;
+        lastX=e.clientX;lastY=e.clientY;
+        if(Math.hypot(lastX-startX,lastY-startY)>5)active=true;
+        if(active){element.classList.add("dragging");element.style.transform=`translate(${lastX-startX}px,${lastY-startY}px)`}
+      }
+      function end(e){
+        if(e.pointerId!==id)return;
+        element.removeEventListener("pointermove",move);
+        element.removeEventListener("pointerup",end);
+        element.removeEventListener("pointercancel",cancel);
+        element.classList.remove("dragging");element.style.transform="";
+        if(active&&e.type==="pointerup")onDrop(lastX,lastY);
+      }
+      function cancel(e){end(e)}
+      element.addEventListener("pointermove",move);
+      element.addEventListener("pointerup",end);
+      element.addEventListener("pointercancel",cancel);
+    });
+  }
+  function renderQuestion(){
+    view="quiz";$("quiz-view").hidden=false;$("result-view").hidden=true;$("review-view").hidden=true;
+    const q=questions[index],s=states[index];
+    updatePhase();
+    $("instruction").textContent=q.question;
+    $("task-text").textContent=q.task;
+    $("counter").textContent=(index+1)+" / "+questions.length;
+    $("previous").disabled=index===0;
+    $("next").disabled=!s.locked;
+    $("next").textContent=index===31?"See Results ▶":"Next ▶";
+    const area=$("answer-area");area.replaceChildren();
+    const feedback=$("feedback");feedback.hidden=!s.locked;feedback.textContent=s.locked?q.explanation:"";
+    if(q.type==="single-choice")renderSingle(q,s,area);
+    if(q.type==="matching")renderMatching(q,s,area);
+    if(q.type==="multi-select-exact")renderMulti(q,s,area);
+    if(q.type==="ordering")renderOrdering(q,s,area);
+    stats();
+  }
+  function transcript(){
+    const details=node("details"),summary=node("summary","Show Transcript");
+    details.append(summary);
+    quizConfig.audioTranscript.forEach(([speaker,text])=>{
+      const line=node("p",null,"transcript-line"),strong=node("strong",speaker+": ");
+      line.append(strong,document.createTextNode(text));details.append(line);
+    });
+    return details;
+  }
+  const storedNumber=key=>{try{return Number(localStorage.getItem(key))||0}catch(_){return 0}};
+  const saveLocal=(key,value)=>{try{localStorage.setItem(key,String(value))}catch(_){}};
+  function breakdown(){
+    const taskMap=new Map();
+    questions.forEach((q,i)=>{
+      if(!taskMap.has(q.taskLabel))taskMap.set(q.taskLabel,{earned:0,total:0});
+      const item=taskMap.get(q.taskLabel);item.earned+=states[i].earned;item.total+=q.points;
+    });
+    return taskMap;
+  }
+  function remark(value){return value<24?"Fail":value<28.8?"Pass":value<33.6?"Fairly Good":value<38.4?"Good":value<43.2?"Very Good":"Excellent!"}
+  function confetti(){
+    for(let i=0;i<75;i++){
+      const piece=node("div",null,"confetti-piece");
+      piece.style.left=Math.random()*100+"%";
+      piece.style.background=["#2563eb","#22c55e","#facc15","#f97316"][i%4];
+      piece.style.animationDelay=Math.random()*1.3+"s";
+      document.body.append(piece);setTimeout(()=>piece.remove(),4400);
+    }
+  }
+  function finish(){
+    if(completed)return;
+    completed=true;timer.pause();audioPlayer.pause();view="result";
+    const final=score(),attempts=storedNumber("causeQuizAttempts")+1,best=Math.max(final,storedNumber("causeQuizBest"));
+    saveLocal("causeQuizAttempts",attempts);saveLocal("causeQuizBest",best);
+    saveLocal("causeQuizLast",final);saveLocal("causeQuizTime",timer.format());
+    $("quiz-view").hidden=true;$("review-view").hidden=true;
+    const result=$("result-view");result.hidden=false;result.replaceChildren();
+    result.append(node("h1","UNIT: 4 — EXPRESSING CAUSE AND EFFECT"),node("h2","LISTENING - QUIZ 1"));
+    const badge=node("div",final.toFixed(2)+" /48","badge"),animated=node("h2","Fail");
+    animated.style.textAlign="center";result.append(badge,animated);
+    const labels=["Fail","Pass","Fairly Good","Good","Very Good","Excellent!"];
+    let ticks=0;const cycle=setInterval(()=>{animated.textContent=labels[ticks%labels.length];if(++ticks>=18){clearInterval(cycle);animated.textContent=remark(final)}},165);
+    const done=states.filter(s=>s.locked).length,correct=states.filter((s,i)=>s.earned===questions[i].points).length;
+    const summary=node("div",null,"summary-grid");
+    [
+      ["Final Score",final.toFixed(2)+" /48"],["Correct Answers",String(correct)],
+      ["Wrong Answers",String(done-correct)],["Accuracy",((correct/done)*100).toFixed(1)+"%"],
+      ["Time Taken",timer.format()],["Attempts",String(attempts)],["Best Score",best.toFixed(2)+" /48"],
+      ["Total Time Taken",timer.format()]
+    ].forEach(([label,value])=>{const box=node("div");box.append(node("strong",label),node("div",value));summary.append(box)});
+    result.append(summary,node("h2","Per-task breakdown"));
+    breakdown().forEach((value,label)=>result.append(node("div",`${label}: ${value.earned}/${value.total}`,"breakdown-row")));
+    result.append(transcript());
+    const actions=node("div",null,"result-actions");
+    [["Review My Answers",()=>renderReview(0)],["Restart Quiz",restart],["Print Results",()=>window.print()],["Save Results",downloadResults]].forEach(([label,handler])=>{
+      const button=node("button",label,label==="Review My Answers"?"primary":"secondary");button.type="button";button.addEventListener("click",handler);actions.append(button);
+    });
+    result.append(actions);
+    if(final>=38.4)confetti();
+    effects("finish");
+  }
+  function renderReview(position){
+    reviewIndex=position;view="review";$("quiz-view").hidden=true;$("result-view").hidden=true;
+    const review=$("review-view");review.hidden=false;review.replaceChildren();
+    review.append(node("h1","Review My Answers"),transcript());
+    const q=questions[position],s=states[position];
+    review.append(node("h2",q.taskLabel),node("p",`Question ${position+1} / ${questions.length}`),node("h3",q.question),node("p",q.task));
+    if(q.type==="single-choice"){
+      review.append(node("div","Student Answer: "+s.answer,s.answer===q.correctAnswer?"review-row correct":"review-row incorrect"));
+      review.append(node("div","Correct Answer: "+q.correctAnswer,"review-row correct"));
+    }else if(q.type==="multi-select-exact"){
+      review.append(node("div","Your selections: "+s.answer.join("; "),"review-row "+(s.earned?"correct":"incorrect")));
+      review.append(node("div","Correct selections: "+q.correctOptions.join("; "),"review-row correct"));
+    }else if(q.type==="matching"){
+      q.rows.forEach(row=>{
+        const actual=q.chips.find(chip=>chip.id===s.answer[row.id]);
+        const correct=q.chips.find(chip=>chip.matchesRowId===row.id);
+        review.append(node("div",`${row.text} — Yours: ${actual?.text||"None"} | Correct: ${correct.text}`,"review-row "+(actual?.id===correct.id?"correct":"incorrect")));
+      });
+    }else{
+      s.answer.forEach((id,i)=>{
+        const actual=q.items.find(item=>item.id===id);
+        review.append(node("div",`${i+1}. Yours: ${actual.text} | Correct: ${q.items[i].text}`,"review-row "+(actual.correctPosition===i+1?"correct":"incorrect")));
+      });
+    }
+    review.append(node("p","Explanation: "+q.explanation,"feedback"));
+    const nav=node("div",null,"nav-row");
+    const prev=node("button","◀ Previous","secondary"),count=node("strong",`${position+1} / ${questions.length}`),next=node("button","Next ▶","primary");
+    prev.type=next.type="button";prev.disabled=position===0;next.disabled=position===31;
+    prev.onclick=()=>renderReview(position-1);next.onclick=()=>renderReview(position+1);
+    nav.append(prev,count,next);review.append(nav);
+    const back=node("button","Back to Results","secondary");back.type="button";back.onclick=()=>{view="result";review.hidden=true;$("result-view").hidden=false};review.append(back);
+  }
+  function report(){
+    const lines=["UNIT: 4","EXPRESSING CAUSE AND EFFECT","LISTENING - QUIZ 1",`Final Score: ${score().toFixed(2)} /48`,`Time Taken: ${timer.format()}`,"", "Per-task breakdown:"];
+    breakdown().forEach((value,label)=>lines.push(`${label}: ${value.earned}/${value.total}`));
+    lines.push("","Transcript:");
+    quizConfig.audioTranscript.forEach(([speaker,text])=>lines.push(`${speaker}: ${text}`));
+    return lines.join("\n");
+  }
+  function downloadResults(){
+    const blob=new Blob([report()],{type:"text/plain;charset=utf-8"});
+    const url=URL.createObjectURL(blob),link=document.createElement("a");
+    link.href=url;link.download="listening-quiz-1-results.txt";document.body.append(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+  }
+  function restart(){
+    states.forEach(s=>clearTimeout(s.selectionTimer));
+    states=freshStates();index=0;completed=false;timer.reset();audioPlayer.reset();
+    timer.start();renderQuestion();
+  }
+  $("previous").addEventListener("click",()=>{if(index>0){index--;renderQuestion()}});
+  $("next").addEventListener("click",()=>{if(!states[index].locked)return;if(index===31)finish();else{index++;renderQuestion()}});
+  $("play-pause").addEventListener("click",()=>audioPlayer.toggle());
+  $("back-ten").addEventListener("click",()=>{
+    if(!audioPlayer.buffer)return;
+    audioPlayer.seek(Math.max(0,audioPlayer.time()-10));
+  });
+  $("forward-ten").addEventListener("click",()=>{
+    if(!audioPlayer.buffer)return;
+    audioPlayer.seek(Math.min(audioPlayer.buffer.duration,audioPlayer.time()+10));
+  });
+  document.addEventListener("keydown",event=>{
+    if(view!=="quiz"||event.altKey||event.ctrlKey||event.metaKey)return;
+    const audioFocused=$("audio-controls").contains(document.activeElement)||document.activeElement===$("audio-controls");
+    if(audioFocused){
+      if(event.key===" "){event.preventDefault();audioPlayer.toggle()}
+      if(event.key==="ArrowLeft"){event.preventDefault();$("back-ten").click()}
+      if(event.key==="ArrowRight"){event.preventDefault();$("forward-ten").click()}
+      return;
+    }
+    if(event.target.closest("button, input, textarea, select, summary"))return;
+    if(event.key==="ArrowLeft"){event.preventDefault();$("previous").click()}
+    if(event.key==="ArrowRight"){event.preventDefault();$("next").click()}
+    const q=questions[index],buttons=$("answer-area").querySelectorAll(".choice");
+    if(/^[1-6]$/.test(event.key)&&["single-choice","multi-select-exact"].includes(q.type)){
+      const button=buttons[Number(event.key)-1];if(button){event.preventDefault();button.click()}
+    }
+    if(event.key==="Enter"&&states[index].locked){event.preventDefault();$("next").click()}
+    if(event.key===" "&&["matching","ordering"].includes(q.type)){
+      const check=$("answer-area").querySelector(".primary");if(check&&!check.disabled){event.preventDefault();check.click()}
+    }
+  });
+  timer.start();renderQuestion();
+  </script>
+ 
+</body></html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Formal Email — Writing Quiz</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&amp;family=Poppins:wght@400;600;800&amp;display=swap" rel="stylesheet">
+  <style>
+html,body{margin:0;padding:0;width:100%;min-height:calc(100 * min(var(--vh, 1vh), 1vh))}
+body{font-family:'Poppins','Cairo',Arial,sans-serif;background:#e6edf6;color:#1e3a5f}
+.quiz-container{width:100%;max-width:100%;min-height:calc(100 * min(var(--vh, 1vh), 1vh));box-sizing:border-box;padding:12px}
+.quiz-card{width:100%;max-width:1100px;margin:0 auto;box-sizing:border-box;background:#fff;border-radius:16px;box-shadow:0 6px 24px rgba(30,58,95,.15);overflow:hidden}
+.quiz-header{background-color:#eaf4ff;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 20px}
+.header-teacher-img,.header-logo-img{height:64px;width:auto;max-width:none;object-fit:contain;flex:none}
+@media(min-width:600px){.header-teacher-img,.header-logo-img{height:80px}}
+@media(min-width:1024px){.header-teacher-img,.header-logo-img{height:96px}}
+@media(max-width:640px){.header-teacher-img,.header-logo-img{height:45px}.quiz-header{padding:8px 12px}}
+.header-title{text-align:center;line-height:1.2;flex:1}
+.title-line1{font-family:'Poppins',sans-serif;font-size:26px;font-weight:800;color:#1e3a5f}
+.title-line2{font-family:'Poppins',sans-serif;font-size:18px;font-weight:400;color:#2563eb}
+.title-line3{font-family:'Poppins',sans-serif;font-size:14px;font-weight:400;color:#64748b}
+@media(max-width:640px){.title-line1{font-size:15px}.title-line2{font-size:11px}.title-line3{font-size:10px}}
+.infobar{display:flex;justify-content:space-between;gap:8px;padding:10px 20px;background:#1e3a5f;color:#fff;font-weight:600;font-size:14px}
+.infobar span:nth-child(2){text-align:center;flex:1}
+@media(max-width:640px){.infobar{font-size:10px;padding:8px 10px}}
+#main{padding:18px 20px 22px}
+.ibox{background:#1e3a8a;color:#fff;font-weight:800;text-transform:uppercase;text-align:center;padding:16px 12px;border-radius:12px;font-size:20px}
+.task{font-size:20px;font-weight:600;padding:20px 8px;text-align:center;line-height:1.5}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{display:flex;align-items:center;gap:10px;text-align:left;font:inherit;font-size:16px;color:#1e3a5f;background:#f1f5f9;border:2px solid #cbd5e1;border-radius:12px;padding:14px;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.tile:hover:not(:disabled){border-color:#2563eb;background:#eaf4ff}
+.tile b{background:#1e3a8a;color:#fff;border-radius:50%;min-width:30px;height:30px;display:flex;align-items:center;justify-content:center}
+.tile.ok{background:#16a34a;border-color:#15803d;color:#fff}.tile.bad{background:#dc2626;border-color:#b91c1c;color:#fff}
+.tile:disabled{cursor:default;opacity:1}
+@media(max-width:640px){.tile{font-size:13px;padding:10px 8px}.task,.ibox{font-size:16px}}
+.fb{margin-top:16px;padding:12px 16px;border-radius:12px;border-left:6px solid}
+.fb.g{background:#dcfce7;border-color:#16a34a}.fb.r{background:#fee2e2;border-color:#dc2626}.fb p{margin:6px 0 0}
+.hintb,.btn{font:inherit;font-weight:600;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;background:#1e3a8a;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.hintb{margin-top:14px;background:#facc15;color:#1e3a5f}
+.hint{margin-top:10px;background:#fef9c3;padding:10px 14px;border-radius:10px}
+.btn:disabled{background:#94a3b8;cursor:not-allowed}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px;font-weight:700}
+.stats{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 10px;margin-top:14px;padding:10px 14px;background:#f1f5f9;border-radius:12px;font-weight:600;font-size:14px}
+@media(max-width:640px){.stats{font-size:12px}}
+.center{text-align:center}
+.badge{width:190px;height:190px;border-radius:50%;background:#1e3a8a;color:#fff;margin:14px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:30px;font-weight:800;box-shadow:0 6px 18px rgba(30,58,138,.35)}
+.badge small{font-size:15px;font-weight:400}
+.remark{font-size:34px;font-weight:800;color:#2563eb;min-height:48px}
+table{width:100%;border-collapse:collapse;margin:12px 0}td{padding:7px 10px;border-bottom:1px solid #e2e8f0}
+.rv{padding:10px 14px;border-radius:10px;margin:8px 0;border-left:6px solid}.rv.g{background:#dcfce7;border-color:#16a34a}.rv.r{background:#fee2e2;border-color:#dc2626}
+.btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:14px}
+#cf{position:fixed;inset:0;pointer-events:none;z-index:9}
+.wr{width:100%;box-sizing:border-box;min-height:200px;font:inherit;padding:12px;border:2px solid #cbd5e1;border-radius:12px}.wcn{font-size:13px;margin:6px 0;color:#64748b}.chk{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:13px;margin:8px 0}.choices.one{grid-template-columns:1fr}.task.lt{text-align:left;font-size:16px}
+.oi{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#f1f5f9;border:2px solid #cbd5e1;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:15px}.oi.ok{background:#dcfce7;border-color:#16a34a}.oi.bad{background:#fee2e2;border-color:#dc2626}.mv{font:inherit;font-size:18px;font-weight:700;border:0;border-radius:8px;width:40px;height:40px;background:#1e3a8a;color:#fff;cursor:pointer;margin-left:6px}.mv:disabled{background:#94a3b8;cursor:not-allowed}
+@media print{.quiz-header,.btns,#cf{display:none}body{background:#fff}.quiz-card{box-shadow:none}}
+</style>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.577.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  
+  
+  
+ <script>(function(){var ok=true;try{window.localStorage.getItem("__t")}catch(e){ok=false}
+if(!ok){var m={};try{Object.defineProperty(window,"localStorage",{configurable:true,value:{
+getItem:function(k){return Object.prototype.hasOwnProperty.call(m,k)?m[k]:null},
+setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}}}})}catch(e2){}}})();</script><script>(function(){var ok=true;try{window.localStorage.getItem("__t")}catch(e){ok=false}
+if(!ok){var m={};try{Object.defineProperty(window,"localStorage",{configurable:true,value:{
+getItem:function(k){return Object.prototype.hasOwnProperty.call(m,k)?m[k]:null},
+setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}}}})}catch(e2){}}})();</script></head>
+ <body>
+  <div class="quiz-container">
+   <div class="quiz-card canva-card">
+    <div class="quiz-header canva-header"><img class="header-teacher-img" src="teacher.png" alt="Teacher Soufiane">
+     <div class="header-title">
+      <div class="title-line1">English2BAC Quizzes</div>
+      <div class="title-line2">Learn • Practice • Succeed</div>
+      <div class="title-line3">with Teacher.Soufiane</div>
+     </div><img class="header-logo-img" src="logo.png" alt="Level-UP 2BAC">
+    </div>
+    <div class="infobar canva-banner">
+     <span class="">UNIT: 4</span><span class="">FORMAL EMAIL</span><span class="">WRITING QUIZ</span>
+    </div>
+    <div id="main"></div>
+   </div>
+  </div>
+  <canvas id="cf"></canvas>
+  <script>
+const quizConfig={unit:"4",title:"FORMAL EMAIL",lesson:"WRITING QUIZ",randomizeQuestions:false,randomizeChoices:true,timerEnabled:true,timerMode:"countup",countdownSeconds:600,showConfetti:true,enableSounds:true};
+const LV=[
+{n:"Form & Register",i:"CHOOSE THE MOST APPROPRIATE ANSWER."},
+{n:"Formal Language",i:"CHOOSE THE MOST FORMAL OPTION."},
+{n:"Error Detection",i:"FIND THE INCORRECT OPTION."},
+{n:"Organization & Structure",i:"CHOOSE THE BEST ORGANIZATION."},
+{n:"Final Challenge",i:"FINAL CHALLENGE — CHOOSE THE BEST FORMAL EMAIL."}];
+const PARTS={A:"Firstly, a modern sports centre would provide a safe place for sports and recreational activities. Secondly, it would encourage young people to adopt a healthier lifestyle. Lastly, it would create opportunities for community engagement.",B:"Yours faithfully,",C:"I am writing to suggest the construction of a modern sports centre for young people in our area.",D:"Thank you for considering this suggestion.",E:"Dear Sir/Madam,",F:"I hope this email finds you well."};
+const CORRECT=["E","F","C","A","D","B"];
+const RAW=[
+[1,"You are writing a formal email to the manager of a company. You have never met the manager and you do not know their name.",["Dear Sir/Madam","Dear Manager","Hi","Dear Friend"],"When the recipient's name is unknown, the standard formal salutation is 'Dear Sir/Madam'.","Think about the formal salutation used when you don't know the name."],
+[1,"You are writing a formal email to Mr Ahmed, the manager of a company.",["Dear Mr Ahmed","Dear Sir/Madam","Hi Ahmed","Hey Mr Ahmed"],"When the name is known, we use 'Dear' + title + surname: 'Dear Mr Ahmed'.","Think about what you can do when you know the recipient's name."],
+[1,"Which combination correctly matches the salutation with the situation?",["Dear Sir/Madam → the recipient's name is unknown","Dear Mr Brown → the recipient's name is unknown","Hi Ahmed → a formal email to an unknown recipient","Hey there → a formal email to a company manager"],"'Dear Sir/Madam' is used only when the name is unknown; the other combinations are informal or mismatched.","Think about when the name is known and when it is not."],
+[1,"You want to begin a formal email politely.",["I hope this email finds you well.","Hey! How are things?","What's up with you?","I just wanted to tell you something."],"A formal opening wishes the reader well in polite language, without slang.","Look for the option with a polite, formal tone."],
+[1,"You want to state the purpose of a formal email clearly.",["I am writing to suggest some improvements for young people in our area.","Guess what I want to tell you!","I have something cool to tell you.","You won't believe what happened."],"'I am writing to...' states the purpose clearly and formally.","Think about the formal phrase that introduces a purpose."],
+[2,"You want to draw the reader's attention to an important issue.",["I would like to draw your attention to this matter.","I want you to look at this thing.","Check this out.","You should know this."],"'I would like to draw your attention to...' is polite and formal.","Think about polite, indirect language."],
+[2,"“__________, a modern stadium would provide a safe space for sports and recreational activities.”",["Firstly","Anyway","By the way","Suddenly"],"'Firstly' introduces the first argument formally; the others are informal or unrelated.","Think about the linking word that starts a list of arguments."],
+[2,"You want to present three main suggestions in a formal email.",["Firstly – Secondly – Lastly","First – Hey – Anyway","Suddenly – Secondly – Wow","Firstly – By the way – Hey"],"The formal sequencing words are 'Firstly – Secondly – Lastly'.","Look for the sequence made only of formal ordering words."],
+[2,"You have finished presenting your suggestions in a formal email.",["Thank you for considering these suggestions.","Anyway, that's all. Bye!","Let me know if you wanna chat.","See you later!"],"A formal closing sentence thanks the reader politely.","Think about a polite, formal way to end."],
+[2,"The email begins:<br>Dear Mr Brown,",["Yours sincerely","Yours faithfully","Cheers","Take care"],"When the name is known ('Dear Mr Brown'), the sign-off is 'Yours sincerely'.","Think about how the sign-off depends on whether the name is known."],
+[3,"Which sentence is NOT appropriate in a formal email?",["Hey! I just wanted to tell you about our idea.","I would like to suggest a new project for young people.","I look forward to your prompt response.","Thank you for your attention to this matter."],"'Hey!' and 'I just wanted to tell you' are informal, so they do not suit a formal email.","Look for the sentence with a casual tone."],
+[3,"Which sentence contains a grammatical error?",["These facilities would helps students develop new skills.","I am writing to suggest some improvements.","The project would provide young people with useful opportunities.","Better transport would improve access to schools."],"After 'would' we use the base form: 'would help', not 'would helps'.","Check the verb form after 'would'."],
+[3,"Which sentence contains an expression that is NOT appropriate for a formal email?",["I wanna tell you about our new project.","I hope this email finds you well.","I would like to draw your attention to this issue.","Thank you for considering my suggestion."],"'Wanna' is informal; the formal version is 'I would like to tell you about...'.","Look for slang or an informal contraction."],
+[3,"The email begins:<br>Dear Sir/Madam,<br>Which sign-off is NOT appropriate?",["Love","Yours faithfully","With kind regards","Respectfully"],"'Love' is an informal sign-off used with family and close friends. 'Yours faithfully', 'With kind regards' and 'Respectfully' are all formal.","Think about which sign-off you would only use with someone very close to you."],
+[3,"These sentences come from a formal email about improving facilities for young people. Which sentence is irrelevant?",["My favourite football team won its match last Saturday.","A modern sports centre would encourage young people to exercise.","More green spaces would provide safe places for recreation.","Better public transport would improve access to schools and jobs."],"This sentence is a personal comment and does not support the purpose of the email.","Look for the sentence that does not support the main purpose."],
+[4,"Which order creates a well-organized formal email?",["Salutation → Opening → Purpose → Body → Closing → Sign-off","Body → Salutation → Sign-off → Opening → Closing → Purpose","Opening → Body → Salutation → Closing → Purpose → Sign-off","Salutation → Body → Sign-off → Purpose → Opening → Closing"],"A formal email follows this order: salutation, opening, purpose, body, closing, sign-off.","Think about the order in which a reader meets each part."],
+[4,"You want to write an email suggesting three improvements for young people in your area.",["Introduction → First suggestion → Second suggestion → Third suggestion → Conclusion","Third suggestion → Introduction → First suggestion → Conclusion → Second suggestion","Conclusion → Second suggestion → Introduction → First suggestion → Third suggestion","Introduction → Conclusion → Third suggestion → Second suggestion → First suggestion"],"A logical order is: introduction, suggestions in sequence, then conclusion.","Think about how a clear text begins and ends."],
+[4,"Choose the sentence that best completes the email.<br><br>Dear Sir/Madam,<br>I hope this email finds you well. I am writing to suggest some improvements for young people in our area.<br>Firstly, a modern sports centre would provide a safe place for physical activities.<br>Secondly, more parks and green spaces would give young people places to relax.<br>Lastly, better public transport would improve access to schools and recreational facilities.",["Thank you for considering these suggestions.","Anyway, that's everything. See you!","Let me know if you wanna chat.","Bye for now!"],"The email needs a polite, formal closing sentence before the sign-off.","Think about the tone the email has used so far."],
+[5,"A local council is planning a project for young people. You want to suggest building a sports centre.",["Dear Sir/Madam,<br>I hope this email finds you well. I am writing to suggest the construction of a modern sports centre for young people in our area.<br>Firstly, it would provide a safe place for sports and recreational activities. Secondly, it would encourage young people to adopt a healthier lifestyle. Lastly, it would offer opportunities for community engagement.<br>Thank you for considering this suggestion.<br>Yours faithfully,","Hi!<br>I wanna tell you that a sports centre would be really cool. Young people would love it.<br>Bye!","Dear Friend,<br>I am writing about the sports centre. It is very nice and I like football a lot. My favourite team is very successful.<br>Cheers!","Hey Sir,<br>Build a sports centre because young people need one. You should do it quickly.<br>See you!"],"This email has the correct salutation, a polite opening, a clear purpose, linking words, a closing sentence and the matching sign-off 'Yours faithfully'.","Check the salutation, tone, structure and sign-off together."],
+[5,"Situation: You are writing a formal email to the president of your local council. You do not know the president's name. You want to suggest building a sports centre for young people in your area.<br>Reorder the six parts of the formal email by clicking the ↑ and ↓ arrows until they are in the correct order.",[],"A formal email follows a clear structure:<br>1. Salutation — greet the recipient.<br>2. Opening — begin the email politely.<br>3. Purpose — explain why you are writing.<br>4. Body — develop your ideas and give supporting details.<br>5. Closing — politely finish the message.<br>6. Sign-off — end with an appropriate expression such as 'Yours faithfully' or 'Yours sincerely'.","",true]
+];
+const POS=["Excellent!","Great Job!","Perfect!","Keep Going!"],NEG=["Almost!","Review this rule.","Keep learning!","You'll get the next one!"];
+const REM=[
+{n:"Keep Practising",min:0,d:"Review the structure of a formal email: salutation, opening, purpose, body with linking words, closing and the correct sign-off."},
+{n:"Good Progress",min:11,d:"You understand the basics, but you need more practice with formal register and sign-off rules."},
+{n:"Very Good",min:15,d:"You handle most formal email features well. Review the sign-off rules and error detection."},
+{n:"Excellent",min:18,d:"You have a very strong command of formal email form, language, register and organization."}];
+let Q=RAW.map(r=>({level:r[0],task:r[1],ch:r[2],ex:r[3],hint:r[4],write:r[5]}));
+if(quizConfig.randomizeQuestions)Q.sort(()=>Math.random()-.5);
+const N=Q.length,$=id=>document.getElementById(id),KEY="formalEmail_w";
+const Timer={id:null,s:0,onTick:null,
+fmt(t){return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")},
+start(){this.pause();this.id=setInterval(()=>{this.s+=quizConfig.timerMode==="countdown"?-1:1;this.onTick&&this.onTick(this.s)},1000)},
+pause(){clearInterval(this.id);this.id=null},
+reset(){this.pause();this.s=quizConfig.timerMode==="countdown"?quizConfig.countdownSeconds:0},
+elapsed(){return quizConfig.timerMode==="countdown"?quizConfig.countdownSeconds-this.s:this.s}};
+Timer.onTick=s=>{const e=$("tm");if(e)e.textContent=Timer.fmt(s);if(quizConfig.timerMode==="countdown"&&s<=0)finish()};
+let cur=0,fin=false,review=false,saved={};
+const mk=()=>{let o=[0,1,2,3];if(quizConfig.randomizeChoices)for(let k=3;k>0;k--){const j=Math.floor(Math.random()*(k+1));[o[k],o[j]]=[o[j],o[k]]}let a=[...CORRECT];do{a.sort(()=>Math.random()-.5)}while(a.join()===CORRECT.join());return{order:o,picked:null,hint:false,fb:"",ord:a,tries:0,marks:false,msg:""}};
+let ST=Q.map(mk);
+function qs(i){return ST[i]}
+function stats(){let c=0,w=0;ST.forEach(s=>{if(s&&s.picked!==null){s.picked===0?c++:w++}});return{c,w,r:N-c-w}}
+let AC;function tone(seq){if(!quizConfig.enableSounds)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();let t=AC.currentTime;seq.forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d);t+=d*.8})}catch(e){}}
+function showQuiz(){
+const q=Q[cur],s=qs(cur);
+let h=`<div class="ibox">${q.write?"FINAL CHALLENGE — REORDER THE FORMAL EMAIL.":LV[q.level-1].i}</div><div class="task${q.write?" lt":""}">${q.task}</div>`;
+if(q.write)h+=`<div id="ol"></div><div class="btns"><button class="btn" id="ck" onclick="chk()">Check Answer</button><button class="btn" id="ta" onclick="again()">Try Again</button></div>`;
+else{h+=`<div class="choices${q.ch[0].length>150?" one":""}">`;
+s.order.forEach((oi,p)=>{h+=`<button class="tile" id="t${p}" onclick="pick(${p})"><b>${"ABCD"[p]}</b><span>${q.ch[oi]}</span></button>`});h+="</div>"}
+h+=`<div id="fbx"></div><div class="nav"><button class="btn" id="bp" onclick="go(-1)">◀ Previous</button><span>${cur+1} / ${N}</span><button class="btn" id="bn" onclick="go(1)"></button></div><div class="stats" id="sts"></div>`;
+$("main").innerHTML=h;paint()}
+function paint(){const q=Q[cur],s=qs(cur),done=s.picked!==null,st=stats();
+if(q.write){ol();$("ck").style.display=done||s.marks?"none":"";$("ta").style.display=!done&&s.marks?"":"none"}
+else s.order.forEach((oi,p)=>{const t=$("t"+p);t.disabled=done;t.className="tile"+(done?(oi===0?" ok":oi===s.picked?" bad":""):"")});
+$("fbx").innerHTML=done?`<div class="fb ${s.picked===0?"g":"r"}"><b>${s.fb}</b><p>${q.ex}</p></div>`:(q.write?(s.marks?s.msg:""):`<button class="hintb" onclick="hint()">💡 Hint</button>`+(s.hint?`<div class="hint">${q.hint}</div>`:""));
+$("bp").disabled=cur===0;$("bn").disabled=!done;$("bn").textContent=cur===N-1?"Finish ✔":"Next ▶";
+$("sts").innerHTML=`<span>✅ Correct: ${st.c}</span><span>❌ Wrong: ${st.w}</span><span>Remaining: ${st.r}</span><span>Score: ${st.c.toFixed(2)} /20</span><span>⏱ <span id="tm">${Timer.fmt(Timer.s)}</span></span>`}
+function pick(p){const q=Q[cur],s=qs(cur);if(q.write||s.picked!==null)return;s.picked=s.order[p];
+const ok=s.picked===0,a=ok?POS:NEG;s.fb=a[Math.floor(Math.random()*a.length)];
+tone(ok?[[660,.12],[880,.2]]:[[300,.2],[220,.3]]);paint();
+if(cur===N-1)setTimeout(()=>{if(!fin)finish()},2500)}
+function ol(){const s=qs(cur),lock=s.picked!==null||s.marks;
+$("ol").innerHTML=s.ord.map((id,i)=>`<div class="oi${s.marks?(CORRECT[i]===id?" ok":" bad"):""}"><div><b>PART ${id}</b> — ${PARTS[id]}</div><span><button class="mv" onclick="mv(${i},-1)" ${i===0||lock?"disabled":""}>↑</button><button class="mv" onclick="mv(${i},1)" ${i===5||lock?"disabled":""}>↓</button></span></div>`).join("")}
+function mv(i,d){const s=qs(cur),k=i+d;if(s.picked!==null||s.marks||k<0||k>5)return;[s.ord[i],s.ord[k]]=[s.ord[k],s.ord[i]];ol()}
+function chk(){const s=qs(cur);if(s.picked!==null||s.marks)return;s.marks=true;const n=s.ord.filter((id,i)=>CORRECT[i]===id).length;
+if(n===6){s.picked=0;s.fb=POS[Math.floor(Math.random()*POS.length)];tone([[660,.12],[880,.2]])}
+else if(++s.tries>=3){s.picked=1;s.fb=NEG[Math.floor(Math.random()*NEG.length)];tone([[300,.2],[220,.3]])}
+else s.msg=`<div class="fb r"><b>${NEG[Math.floor(Math.random()*NEG.length)]}</b><p>${n} of 6 parts are in the correct position (green). Fix the red ones. Attempt ${s.tries} of 3.</p></div>`;
+paint()}
+function again(){const s=qs(cur);if(s.picked!==null)return;s.marks=false;paint()}
+function hint(){qs(cur).hint=true;paint()}
+function go(d){if(d>0&&qs(cur).picked===null)return;if(cur+d<0)return;if(cur+d>=N){finish();return}cur+=d;showQuiz()}
+function levelRows(){return LV.map((l,i)=>{let t=0,c=0;Q.forEach((q,k)=>{if(q.level===i+1){t++;if(ST[k]&&ST[k].picked===0)c++}});return{n:`Level ${i+1} — ${l.n}`,c,t}})}
+function finish(){if(fin)return;fin=true;Timer.pause();const st=stats(),sc=st.c,time=Timer.elapsed();
+try{saved=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){saved={}}
+saved={best:Math.max(saved.best||0,sc),attempts:(saved.attempts||0)+1,last:sc,time:time};
+try{localStorage.setItem(KEY,JSON.stringify(saved))}catch(e){}
+const R=[...REM].reverse().find(r=>sc>=r.min),acc=Math.round(sc/N*100);
+let h=`<div class="center"><h2>QUIZ · Unit ${quizConfig.unit} · ${quizConfig.title} · ${quizConfig.lesson}</h2>
+<div class="badge">${sc.toFixed(2)}<small>/20</small></div><div class="remark" id="rm">…</div><p id="rd"></p></div>
+<table><tr><td>Final Score</td><td>${sc.toFixed(2)} /20</td></tr><tr><td>Correct Answers</td><td>${st.c}</td></tr><tr><td>Wrong Answers</td><td>${N-st.c}</td></tr><tr><td>Accuracy</td><td>${acc}%</td></tr><tr><td>Time Taken</td><td>${Timer.fmt(time)}</td></tr><tr><td>Number of Attempts</td><td>${saved.attempts}</td></tr><tr><td>Best Score</td><td>${saved.best.toFixed(2)} /20</td></tr>`;
+levelRows().forEach(r=>h+=`<tr><td>${r.n}</td><td>${r.c}/${r.t}</td></tr>`);
+h+=`</table><div class="btns"><button class="btn" onclick="toggleReview()">Review My Answers</button><button class="btn" onclick="restart()">Restart Quiz</button><button class="btn" onclick="window.print()">Print Results</button><button class="btn" onclick="saveRes()">Save Results</button></div><div id="rv"></div>`;
+$("main").innerHTML=h;tone([[523,.15],[659,.15],[784,.15],[1047,.4]]);
+let i=0,d=60,t=0;(function step(){if(t<3000){$("rm").textContent=REM[i++%4].n;t+=d;d*=1.12;setTimeout(step,d)}else{$("rm").textContent=R.n;$("rd").textContent=R.d}})();
+if(quizConfig.showConfetti&&sc>=18)confetti()}
+function toggleReview(){review=!review;let h="";if(review)LV.forEach((l,li)=>{h+=`<h3>Level ${li+1} — ${l.n}</h3>`;Q.forEach((q,k)=>{if(q.level!==li+1)return;const s=ST[k],ok=s.picked===0;h+=`<div class="rv ${ok?"g":"r"}"><b>Q${k+1}.</b> ${q.task}<br>${q.write?"Your order: "+s.ord.join(" → ")+"<br>Correct order: "+CORRECT.join(" → ")+"<br>":"Your answer: "+q.ch[s.picked]+"<br>Correct answer: "+q.ch[0]+"<br>"}<i>${q.ex}</i></div>`})});$("rv").innerHTML=h}
+function saveRes(){const st=stats();let t=`${quizConfig.title} — ${quizConfig.lesson} (Unit ${quizConfig.unit})\nScore: ${st.c.toFixed(2)} /20\nTime: ${Timer.fmt(Timer.elapsed())}\n\n`;levelRows().forEach(r=>t+=`${r.n}: ${r.c}/${r.t}\n`);const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/plain"}));a.download="quiz-results.txt";a.click()}
+function restart(){ST=Q.map(mk);cur=0;fin=false;review=false;Timer.reset();Timer.start();showQuiz()}
+function confetti(){const c=$("cf"),x=c.getContext("2d");c.width=innerWidth;c.height=innerHeight;const P=Array.from({length:140},()=>({x:Math.random()*c.width,y:-Math.random()*c.height,v:2+Math.random()*4,s:5+Math.random()*6,c:`hsl(${Math.random()*360},85%,55%)`}));let f=0;(function a(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.v;x.fillStyle=p.c;x.fillRect(p.x,p.y,p.s,p.s)});if(++f<260)requestAnimationFrame(a);else x.clearRect(0,0,c.width,c.height)})()}
+document.addEventListener("keydown",e=>{if(fin||/TEXTAREA|INPUT/.test(e.target.tagName))return;
+if("1234".includes(e.key)&&e.key.length===1){pick(+e.key-1);return}
+if(e.target.tagName==="BUTTON"&&(e.key==="Enter"||e.key===" "))return;
+if(e.key==="ArrowRight"||e.key==="Enter"||e.key===" "){e.preventDefault();go(1)}
+else if(e.key==="ArrowLeft")go(-1)});
+Timer.reset();showQuiz();if(quizConfig.timerEnabled)Timer.start();
+</script>
+ 
+</body></html>
