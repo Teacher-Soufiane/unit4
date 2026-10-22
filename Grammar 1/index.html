@@ -1,5 +1,36 @@
 <!doctype html>
-<html lang="en"><head><script>(function(){var ok=true;try{window.localStorage.getItem("__t")}catch(e){ok=false}
+<html lang="en"><head><script id="lu-shuf">(function(){
+function fy(a){a=Array.prototype.slice.call(a);for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+var isS=function(v){return typeof v==="string"},last=-1,counts=[0,0,0,0,0,0,0,0],seen={};
+function key(a){return a.map(String).sort().join("|~|")}
+function cands(arr){var out=[];
+try{var qs=(typeof quizConfig!=="undefined"&&quizConfig.questions)||[],k=key(arr);
+qs.forEach(function(q){var lists=[],strs=[],vals=Array.isArray(q)?q:Object.keys(q).map(function(p){return q[p]});
+vals.forEach(function(v){if(Array.isArray(v)&&v.length&&v.every(isS))lists.push(v);else if(isS(v))strs.push(v)});
+if(lists.some(function(l){return l.length===arr.length&&key(l)===k})){
+var multi=lists.some(function(l){return l.length>=2&&l.length<arr.length&&l.every(function(x){return arr.indexOf(x)>-1})});
+var c=strs.filter(function(s){return arr.indexOf(s)>-1});out.push(!multi&&c.length===1?c[0]:null)}})}catch(e){}
+return out}
+function balance(res,orig){
+if(!res||res.__bal)return res;
+try{if(!Array.isArray(orig)||res.length<3||!orig.every(isS))return res;
+var cs=cands(orig);if(!cs.length)return res;
+var k=key(orig),n=seen[k]||0;seen[k]=n+1;
+var correct=cs[n%cs.length];if(correct==null)return res;
+var idx=res.indexOf(correct);if(idx<0)return res;
+var min=1e9,i,cand=[];
+for(i=0;i<res.length;i++){if(i!==last)min=Math.min(min,counts[i])}
+for(i=0;i<res.length;i++){if(i!==last&&counts[i]===min)cand.push(i)}
+var t=cand[Math.floor(Math.random()*cand.length)],tmp=res[t];res[t]=res[idx];res[idx]=tmp;
+last=t;counts[t]++;res.__bal=true}catch(e){}
+return res}
+window.__balIdx=function(order,correct){try{if(!order||order.length<3)return order;var idx=order.indexOf(correct);if(idx<0)return order;
+var min=1e9,i,cand=[];for(i=0;i<order.length;i++){if(i!==last)min=Math.min(min,counts[i])}
+for(i=0;i<order.length;i++){if(i!==last&&counts[i]===min)cand.push(i)}
+var t=cand[Math.floor(Math.random()*cand.length)],tmp=order[t];order[t]=order[idx];order[idx]=tmp;last=t;counts[t]++}catch(e){}return order};
+window.__shuf=function(arr){return balance(fy(arr),arr)};
+window.__wrapShuf=function(res,orig){return balance(res,orig)};
+})();</script><script>(function(){var ok=true;try{window.localStorage.getItem("__t")}catch(e){ok=false}
 if(!ok){var m={};try{Object.defineProperty(window,"localStorage",{configurable:true,value:{
 getItem:function(k){return Object.prototype.hasOwnProperty.call(m,k)?m[k]:null},
 setItem:function(k,v){m[k]=String(v)},removeItem:function(k){delete m[k]},clear:function(){m={}}}})}catch(e2){}}})();</script>
@@ -71,7 +102,7 @@ table{width:100%;border-collapse:collapse;margin:12px 0}td{padding:7px 10px;bord
      </div><img class="header-logo-img canva-image" data-template-id="logo-image" id="logo-image" src="logo.png" alt="Level-UP 2BAC">
     </div>
     <div class="infobar canva-banner" data-template-id="infobar" id="infobar">
-     <span class="canva-text" data-template-id="unit-label" id="unit-label">UNIT: 3</span><span class="canva-text" data-template-id="quiz-title" id="quiz-title"></span><span class="canva-text" data-template-id="lesson-label" id="lesson-label">GRAMMAR QUIZ 1</span>
+     <span class="canva-text" data-template-id="unit-label" id="unit-label">UNIT: 3</span><span class="canva-text" data-template-id="quiz-title" id="quiz-title">FUTURE FORMS — WILL vs BE GOING TO</span><span class="canva-text" data-template-id="lesson-label" id="lesson-label">GRAMMAR QUIZ 1</span>
     </div>
     <div id="main"></div>
    </div>
@@ -132,7 +163,7 @@ Timer.onTick=s=>{const e=$("tm");if(e)e.textContent=Timer.fmt(s);if(quizConfig.t
 /* ===== STATE ===== */
 let cur=0,ST=[],fin=false,review=false,saved={};
 /* Shuffle ONCE per question; order is stored and never recomputed on re-render */
-function qs(i){if(!ST[i]){let displayOrder=[0,1,2,3];if(quizConfig.randomizeChoices)for(let k=displayOrder.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[displayOrder[k],displayOrder[j]]=[displayOrder[j],displayOrder[k]]}ST[i]={displayOrder,picked:null,hint:false,fb:""}}return ST[i]}
+function qs(i){if(!ST[i]){let displayOrder=[0,1,2,3];if(quizConfig.randomizeChoices)for(let k=displayOrder.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[displayOrder[k],displayOrder[j]]=[displayOrder[j],displayOrder[k]]}ST[i]={displayOrder:(quizConfig.randomizeChoices?__balIdx(displayOrder,0):displayOrder),picked:null,hint:false,fb:""}}return ST[i]}
 function stats(){let c=0,w=0;ST.forEach(s=>{if(s&&s.picked!==null){s.picked===0?c++:w++}});return{c,w,r:N-c-w}}
 /* ===== SOUNDS (WebAudio only) ===== */
 let AC;function tone(seq){if(!quizConfig.enableSounds)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();let t=AC.currentTime;seq.forEach(([f,d])=>{const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+d);t+=d*.8})}catch(e){}}
